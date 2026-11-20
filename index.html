@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="แผนกวิชาโยธา วิทยาลัยเทคนิคสกลนคร — ศูนย์ CVM สาขาวิชาโยธา เปิดสอน ปวช. ปวส. และ ป.ตรี เทคโนโลยีโยธา">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แผนกวิชาโยธา - วิทยาลัยเทคนิคสกลนคร</title>
+<link rel="icon" href="images/logo/dept-civil.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ============ TOKENS (ตรงกับ 02-design-tokens.css) ============ */
+:root{
+  --primary:#2563eb;--primary-dark:#1d4ed8;--primary-100:#dbeafe;--primary-200:#bfdbfe;--primary-300:#93c5fd;
+  --dept:#f0741c;--dept-dark:#c2560f;--dept-100:#ffedd5;--dept-200:#fed7aa;
+  --cta:#f0741c;--cta-hover:#d9630f;--cta-ink:#fff;--accent:#d9630f;--danger:#dc2626;
+  --ink:#0f172a;--ink-2:#334155;--ink-3:#64748b;--line:#e2e8f0;
+  --bg-white:#f8fafc;--bg-light:#eef2f8;--bg-footer:#eaf0f9;--card:#fff;
+  --font:'Inter','Noto Sans Thai',sans-serif;
+  --fs-hero:clamp(2.25rem,5.5vw,5rem);--fs-eyebrow:clamp(1.25rem,2.3vw,2.1rem);--fs-h2:clamp(2rem,3.8vw,3.5rem);
+  --r-pill:999px;--r-card:22px;--r-glass:28px;--r-btn:18px;
+  --shadow-blue-sm:0 8px 19px -13px rgba(37,99,235,.6);--shadow-blue:0 16px 32px -16px rgba(37,99,235,.6);
+  --shadow-blue-lg:0 40px 80px -32px rgba(37,99,235,.6);
+  --glass-bg:linear-gradient(160deg,rgba(255,255,255,.8),rgba(255,255,255,.4));
+  --nav-bg:linear-gradient(90deg,rgba(37,99,235,.78),rgba(29,78,216,.74));
+  --sec-pad:clamp(48px,6vw,68px);--container:1240px;--ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{overflow-x:hidden;font-family:var(--font);font-size:1.05rem;line-height:1.5;color:var(--ink);background:var(--bg-white)}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--container);margin:0 auto;padding:0 20px}
+
+/* ============ NAV: glass pill ============ */
+.nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);width:min(calc(100% - 24px),1320px);z-index:100;
+  display:flex;align-items:center;gap:12px;height:56px;padding:0 8px 0 10px;border-radius:var(--r-pill);
+  background:var(--nav-bg);backdrop-filter:saturate(1.8) blur(22px);-webkit-backdrop-filter:saturate(1.8) blur(22px);
+  border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 12px 40px -16px rgba(37,99,235,.6)}
+.nav-brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:600;white-space:nowrap}
+.nav-logo{width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;overflow:hidden;padding:2px}.nav-logo img{width:100%;height:100%;object-fit:contain}
+.nav-links{display:flex;align-items:center;gap:2px;margin:0 auto;list-style:none}
+.nav-links>li{position:relative}
+.nav-links .top{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.9);font:inherit;font-size:.92rem;font-weight:600;padding:8px 12px;white-space:nowrap;border-radius:var(--r-pill);transition:.2s;background:none;border:0;cursor:pointer}
+.nav-links .top i{font-size:.62rem;opacity:.8;transition:.2s}
+.nav-links .top:hover,.nav-links .top.on,.dd.open>.top{color:#fff;background:rgba(255,255,255,.16)}
+.nav-links .top.on{box-shadow:inset 0 -2px 0 var(--cta)}
+.dd .sub{position:absolute;top:calc(100% + 12px);left:50%;transform:translate(-50%,6px);min-width:250px;background:#fff;border-radius:18px;padding:8px;
+  box-shadow:0 18px 48px -12px rgba(15,23,42,.35);opacity:0;visibility:hidden;transition:.18s;display:grid;gap:2px}
+.dd .sub::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
+.dd:hover .sub,.dd.open .sub{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.dd:hover>.top i,.dd.open>.top i{transform:rotate(180deg)}
+.dd .sub a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;color:var(--ink);font-size:.9rem;font-weight:500;white-space:nowrap}
+.dd .sub a i{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--primary-100);color:var(--primary);font-size:.8rem}
+.dd .sub a:hover,.dd .sub a.on{background:var(--bg-light);color:var(--primary)}
+.dd .sub a.on i{background:var(--cta);color:#fff}
+.dd.closing .sub{opacity:0!important;visibility:hidden!important}
+.nav-btns{display:flex;gap:8px}
+button{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:600;font-size:.92rem;
+  border-radius:var(--r-pill);padding:9px 16px;border:1px solid transparent;cursor:pointer;transition:.25s var(--ease);white-space:nowrap}
+.btn-white{background:#fff;color:var(--primary-dark)}
+.btn-cta{background:var(--cta);color:var(--cta-ink);box-shadow:0 8px 24px -10px rgba(240,116,28,.8)}
+.btn-cta:hover{background:var(--cta-hover);transform:translateY(-1px)}
+.burger{display:none;margin-left:auto;background:none;border:0;color:#fff;font-size:22px;padding:8px 12px;cursor:pointer}
+.mmenu{display:none;position:fixed;top:76px;left:12px;right:12px;z-index:99;background:#fff;border-radius:24px;padding:12px;box-shadow:var(--shadow-blue-lg)}
+.mmenu.open{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mmenu a{padding:12px 14px;border-radius:14px;background:var(--bg-light);font-weight:500}
+
+/* ============ SECTIONS ============ */
+.sec{padding:var(--sec-pad) 0}
+.sec.white{background:var(--bg-white)} .sec.light{background:var(--bg-light)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.h2::after{content:"";display:block;width:56px;height:5px;border-radius:9px;background:var(--dept);margin-top:10px}
+.sec-head[style*="center"] .h2{text-align:center}.sec-head[style*="center"] .h2::after{margin-inline:auto}
+.h2{font-size:var(--fs-h2);font-weight:600;letter-spacing:-.005em;line-height:1.35}
+.sub{color:var(--ink-2);font-size:1.15rem;margin-top:4px}
+.more{color:var(--primary-dark);font-weight:600;font-size:.95rem;white-space:nowrap}
+.more:hover{text-decoration:underline}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ HERO ============ */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:110px 0 60px;
+  background:radial-gradient(55% 45% at 50% 40%,#dbe6f8 0%,rgba(219,230,248,0) 70%),linear-gradient(#f8fafc 0%,#fff 75%)}
+.hero-mark{position:absolute;top:13%;left:50%;transform:translateX(-50%);font-size:clamp(7rem,22vw,20rem);font-weight:800;
+  letter-spacing:-.04em;line-height:1;background:linear-gradient(180deg,rgba(147,197,253,.55),rgba(219,234,254,.25));
+  -webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;pointer-events:none;white-space:nowrap}
+.hero-mark svg{position:absolute;left:0;right:0;bottom:22%;width:100%;height:24%}
+.hero-ring{position:absolute;border:1px solid rgba(147,197,253,.35);border-radius:50%;pointer-events:none}
+.hero .wrap{position:relative;width:100%;padding-top:clamp(140px,26vh,280px)}
+.eyebrow{font-size:var(--fs-eyebrow);font-weight:700;color:var(--primary-dark)}
+.hero h1{font-size:var(--fs-hero);font-weight:700;line-height:1.3;max-width:1100px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{color:var(--ink-2);font-size:1.15rem;margin:14px 0 26px;max-width:640px}
+.pills{display:flex;flex-wrap:wrap;gap:12px}
+.pill{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--primary-dark);border:1px solid var(--primary-200);
+  border-radius:var(--r-pill);padding:12px 20px;font-weight:500;box-shadow:var(--shadow-blue-sm);transition:.25s var(--ease)}
+.pill:hover{transform:translateY(-2px);border-color:var(--primary-300)}
+.pill.soft{background:var(--dept-100);color:var(--dept-dark);border-color:var(--dept-200)}
+.pill.cta{background:var(--cta);color:var(--cta-ink);border-color:var(--cta);font-weight:700}
+
+/* ============ HIGHLIGHT: peek carousel ============ */
+.hl-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 max(20px,calc((100vw - var(--container))/2 + 20px)) 8px;scrollbar-width:none}
+.hl-track::-webkit-scrollbar{display:none}
+.hl-slide{flex:0 0 min(86vw,1100px);aspect-ratio:16/8;border-radius:32px;position:relative;overflow:hidden;scroll-snap-align:center;color:#fff}
+.hl-slide .ph{position:absolute;inset:0}
+.hl-slide .cap{position:absolute;left:0;right:0;top:0;padding:32px 36px;background:linear-gradient(180deg,rgba(15,23,42,.55),transparent)}
+.hl-slide h3{font-size:clamp(1.2rem,2.2vw,1.9rem);font-weight:700;max-width:760px;line-height:1.4}
+.hl-ctrl{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:18px}
+.dots{display:flex;gap:7px}
+.dot{width:8px;height:8px;border-radius:9px;background:var(--primary-200);border:0;cursor:pointer;transition:.3s}
+.dot.on{width:26px;background:var(--dept)}
+.round{width:40px;height:40px;border-radius:50%;border:1px solid var(--primary-200);background:#fff;color:var(--primary);cursor:pointer;display:grid;place-items:center}
+
+/* placeholder images (แทนด้วยรูปจริงภายหลัง) */
+.ph{display:grid;place-items:center;font-size:clamp(3rem,7vw,6rem);color:rgba(255,255,255,.35)}
+.ph-1{background:linear-gradient(135deg,#1e3a8a,#3b82f6)} .ph-2{background:linear-gradient(135deg,#0f766e,#22d3ee)}
+.ph-3{background:linear-gradient(135deg,#9a3412,#fb923c)} .ph-4{background:linear-gradient(135deg,#334155,#94a3b8)}
+.ph-5{background:linear-gradient(135deg,#4338ca,#a78bfa)}
+
+/* ============ COVERFLOW (บุคลากร / ผลงาน) ============ */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.field{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:var(--r-pill);padding:10px 16px}
+.field input,.field select{border:0;outline:0;font:inherit;font-size:.95rem;background:transparent;color:var(--ink);-webkit-appearance:none;appearance:none}
+.cf{position:relative;height:470px;perspective:1400px;margin-top:10px;overflow:hidden}
+.cf-card{position:absolute;left:50%;top:20px;width:290px;margin-left:-145px;padding:12px;border-radius:var(--r-glass);
+  background:var(--glass-bg);backdrop-filter:blur(18px) saturate(1.6);border:1px solid #fff;
+  box-shadow:var(--shadow-blue-lg),inset 0 1px 0 #fff;transition:transform .6s var(--ease),opacity .6s,filter .6s;cursor:pointer}
+.cf-card .ph{aspect-ratio:3/3.4;border-radius:20px;font-size:5rem}
+.cf-card .photo{position:relative;overflow:hidden;background:linear-gradient(180deg,#dbeafe,#eff6ff)}
+.cf-card .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.cf-card .meta{text-align:center;padding:14px 6px 6px}
+.cf-card .role{font-size:.8rem;color:var(--ink-3)} .cf-card .name{font-weight:700;font-size:1.1rem;margin:2px 0 8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:var(--primary-100);color:var(--primary-dark);font-size:.8rem;font-weight:600;padding:4px 12px;border-radius:var(--r-pill)}
+.tag.price{background:var(--primary);color:#fff}
+.cf-nav{position:absolute;top:45%;z-index:20}
+.cf-nav.prev{left:4%} .cf-nav.next{right:4%}
+
+/* ============ COURSES grid (แทน "เวลาทำการ") ============ */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:22px;transition:.3s var(--ease)}
+.card:hover{box-shadow:var(--shadow-blue);transform:translateY(-3px)}
+.card.strong{border:2px solid var(--dept);box-shadow:0 16px 32px -16px rgba(240,116,28,.55)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+.card h3{font-size:1.15rem;font-weight:700}
+.ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--primary-100);color:var(--primary);font-size:20px;flex:none}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--accent)}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--dept);box-shadow:0 0 0 4px rgba(240,116,28,.2)}
+.rows{list-style:none;font-size:.95rem;color:var(--ink-2)}
+.rows li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line)}
+.rows li b{color:var(--ink);font-weight:600}
+
+/* ============ MODE TABS + STEPS (รับสมัคร) ============ */
+.modes{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:26px;overflow-x:auto}
+.mode{background:none;border:0;font:inherit;padding:8px 18px 12px;cursor:pointer;color:var(--ink-3);font-weight:600;
+  border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.mode i{font-size:1.2rem}
+.mode.on{color:var(--ink);border-color:var(--primary)}
+.quota{background:#fff;border-radius:var(--r-card);border:1px solid rgba(240,116,28,.35);border-left:6px solid var(--dept);padding:24px 26px;margin-bottom:26px;box-shadow:0 18px 40px -24px rgba(240,116,28,.55)}
+.q-badge{display:inline-flex;align-items:center;gap:8px;background:var(--dept);color:#fff;font-weight:700;font-size:.85rem;padding:6px 14px;border-radius:999px}
+.q-badge.closed{background:#94a3b8}
+.quota h3{font-size:1.3rem;margin:12px 0 6px;color:var(--ink);line-height:1.45}
+.quota p{color:var(--ink-2);font-size:.95rem}.quota p a{color:var(--primary);font-weight:600}
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.q-col{display:grid;gap:8px;align-content:start}.q-col>b{display:flex;gap:8px;align-items:center;color:var(--ink);margin-bottom:2px}.q-col>b i{color:var(--dept)}
+.q-btn{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;background:var(--primary);color:#fff;font-weight:600;font-size:.92rem;transition:.2s}
+.q-btn.main{background:var(--dept)}.q-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.q-btn.ghost{background:var(--bg-light);color:var(--primary-dark);border:1px solid var(--primary-200)}
+.q-btn i{font-size:.75rem;opacity:.85}
+@media (max-width:760px){.q-grid{grid-template-columns:1fr}.quota{padding:20px}}
+.panel{display:none} .panel.on{display:block}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:s;list-style:none}
+.steps li{background:#fff;border-radius:var(--r-card);padding:22px;border:1px solid var(--line);position:relative}
+.steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;
+  background:var(--dept);color:#fff;font-weight:700;margin-bottom:12px;box-shadow:0 10px 20px -10px rgba(240,116,28,.8)}
+.steps b{display:block;margin-bottom:4px}
+.steps span{font-size:.92rem;color:var(--ink-2)}
+
+/* ============ SERVICES: segmented + search + chips ============ */
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,330px));gap:12px;margin-bottom:20px}
+.seg button{display:flex;align-items:center;gap:14px;text-align:left;font:inherit;padding:14px 18px;border-radius:var(--r-btn);
+  border:1px solid var(--line);background:#fff;cursor:pointer;transition:.25s}
+.seg button{color:var(--ink)}
+.seg button small{display:block;font-size:.8rem;opacity:.8;color:inherit}
+.seg button:not(.on) small{color:var(--ink-2);opacity:1}
+.seg button.on{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:var(--shadow-blue)}
+.seg .si{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.2);font-size:18px}
+.seg button:not(.on) .si{background:var(--primary-100);color:var(--primary)}
+.search{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:var(--r-pill);padding:13px 20px;margin-bottom:16px}
+.search input{flex:1;border:0;outline:0;font:inherit;background:transparent;color:var(--ink);-webkit-appearance:none;appearance:none}
+.search input::placeholder,.field input::placeholder{color:var(--ink-3)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{color:var(--ink);font:inherit;font-size:.9rem;font-weight:500;padding:9px 17px;border-radius:var(--r-pill);background:var(--bg-footer);border:0;cursor:pointer;display:flex;gap:7px;align-items:center}
+.chip.on{background:var(--primary);color:#fff}
+.list2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.item{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 18px}
+.item .ico{width:40px;height:40px;font-size:16px}
+.item small{display:block;color:var(--ink-3);font-size:.85rem}
+.item .go{margin-left:auto;color:var(--primary);font-size:.85rem;font-weight:600;white-space:nowrap}
+
+/* ============ LABS (แทน ห้องพิเศษ) ============ */
+.tabs-pill{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tabs-pill button{font:inherit;font-weight:600;padding:10px 18px;border-radius:var(--r-pill);border:1px solid var(--primary-200);background:#fff;color:var(--primary-dark);cursor:pointer;display:flex;gap:8px;align-items:center}
+.tabs-pill button.on{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:var(--shadow-blue)}
+.lab{display:grid;grid-template-columns:1.25fr 1fr;gap:22px}
+.lab-media{border-radius:var(--r-glass);overflow:hidden;min-height:440px;position:relative}
+.lab-media .ph{position:absolute;inset:0}
+.lab-media .hint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);background:rgba(15,23,42,.6);color:#fff;font-size:.85rem;padding:6px 14px;border-radius:var(--r-pill);backdrop-filter:blur(6px)}
+.lab-info{background:var(--glass-bg);border:1px solid var(--line);border-radius:var(--r-glass);padding:26px;box-shadow:var(--shadow-blue)}
+.lab-info h3{font-size:1.6rem;font-weight:700;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.lab-info p{color:var(--ink-2);margin:8px 0 16px}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.feat div{display:flex;gap:9px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.9rem}
+.feat i{color:var(--primary);width:18px;text-align:center}
+
+/* ============ NEWS: featured + list ============ */
+.news{display:grid;grid-template-columns:1.6fr 1fr;gap:22px}
+.feature{background:#fff;border-radius:var(--r-glass);overflow:hidden;border:1px solid var(--line)}
+.feature .ph{aspect-ratio:16/9}
+.feature .body{padding:20px 24px;display:flex;gap:14px;align-items:flex-start}
+.feature h3{font-size:1.25rem;font-weight:700;flex:1}
+.date{color:var(--ink-3);font-size:.85rem;white-space:nowrap}
+.side-list{display:flex;flex-direction:column;gap:12px}
+.side-list a{display:flex;gap:14px;background:#fff;border-radius:18px;padding:10px;border:1px solid var(--line);transition:.25s}
+.side-list a:hover{box-shadow:var(--shadow-blue-sm)}
+.side-list .ph{width:96px;height:72px;border-radius:12px;flex:none;font-size:1.6rem}
+.side-list b{font-size:.95rem;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ============ ANNOUNCEMENTS: date badge list ============ */
+.ann{display:flex;flex-direction:column;gap:12px}
+.ann-row{display:flex;align-items:center;gap:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 18px}
+.dbadge{width:62px;flex:none;text-align:center;border-radius:14px;background:var(--dept-100);color:var(--dept-dark);padding:6px 0;line-height:1.15}
+.dbadge small{display:block;font-size:.72rem} .dbadge b{font-size:1.5rem}
+.ann-row .t{flex:1}
+.ann-row .labels{display:flex;gap:6px;margin-bottom:4px}
+.lbl{font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:var(--r-pill);background:var(--primary-100);color:var(--primary-dark)}
+.lbl.pdf{background:#fee2e2;color:var(--danger)}
+.dl{display:inline-flex;gap:7px;align-items:center;font-size:.85rem;font-weight:600;color:var(--primary-dark);border:1px solid var(--primary-200);border-radius:10px;padding:8px 14px;white-space:nowrap}
+
+/* ============ FAQ ============ */
+.faq{max-width:900px;margin:0 auto}
+.faq details{border-bottom:1px solid var(--line);padding:20px 4px}
+.faq summary{list-style:none;cursor:pointer;font-weight:600;font-size:1.1rem;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--primary);font-size:1.4rem;line-height:1;transition:.3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{color:var(--ink-2);margin-top:12px}
+
+/* ============ CONTACT ============ */
+.contact{display:grid;grid-template-columns:1.2fr 1fr;gap:22px}
+.map{border-radius:var(--r-glass);overflow:hidden;min-height:420px;border:1px solid var(--line)}
+.map iframe{width:100%;height:100%;border:0;min-height:420px}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ccard{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:20px}
+.ccard .ico{margin-bottom:12px}
+.ccard small{color:var(--ink-3);display:block}
+.ccard b{display:block;font-size:1.1rem;margin:2px 0 6px;word-break:break-all}
+.ccard a{color:var(--primary-dark);font-size:.88rem;font-weight:600}
+
+/* ============ FOOTER ============ */
+footer{background:var(--bg-footer);color:#475569;font-size:.85rem;padding:40px 0 100px}
+.fgrid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:28px}
+footer h4{color:var(--ink);font-size:.9rem;margin-bottom:10px}
+footer ul{list-style:none;display:grid;gap:7px}
+footer a:hover{color:var(--primary)}
+.copy{border-top:1px solid #d6e0ee;margin-top:28px;padding-top:16px}
+
+/* ============ FLOATING ============ */
+.side-quick{position:fixed;right:10px;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:8px}
+.side-quick a{width:44px;height:44px;border-radius:50%;background:var(--dept);color:#fff;display:grid;place-items:center;box-shadow:0 10px 22px -10px rgba(240,116,28,.9);transition:.25s}
+.side-quick a:hover{transform:scale(1.08)}
+.dock{position:fixed;right:16px;bottom:16px;z-index:95;display:flex;align-items:center;gap:4px;background:#fff;border-radius:var(--r-pill);
+  padding:6px;box-shadow:0 18px 40px -16px rgba(15,23,42,.35);border:1px solid var(--line)}
+.dock a{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;padding:8px 12px;border-radius:var(--r-pill)}
+.dock a.call{color:var(--danger)} .dock a.cta{background:var(--cta);color:var(--cta-ink)}
+
+
+/* ============ CVM ============ */
+.cvm-chip{display:inline-flex;align-items:center;gap:8px;background:var(--dept-100);color:var(--dept-dark);border:1px solid var(--dept-200);font-weight:700;font-size:.9rem;padding:6px 14px;border-radius:var(--r-pill);margin-bottom:10px}
+.cvm{background:linear-gradient(160deg,#0f2a6b 0%,#1d4ed8 60%,#2563eb 100%);color:#fff;position:relative;overflow:hidden}
+.cvm::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.cvm .wrap{position:relative}
+.cvm-top{display:grid;grid-template-columns:1fr 1.15fr;gap:36px;align-items:start}
+.cvm .tagline{display:inline-block;font-size:.8rem;font-weight:600;letter-spacing:.02em;color:var(--dept-200);margin-bottom:8px}
+.cvm .h2{color:#fff}.cvm .h2 em{font-style:normal;color:#fdba74;white-space:nowrap}
+.cvm p.lead{color:rgba(255,255,255,.85);margin:14px 0 22px;font-size:1.05rem}
+.cvm-btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.45)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.role{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:var(--r-card);padding:20px;backdrop-filter:blur(8px)}
+.role .n{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--dept);color:#fff;font-size:18px;margin-bottom:12px;box-shadow:0 10px 24px -10px rgba(240,116,28,.9)}
+.role b{display:block;font-size:1.05rem;margin-bottom:4px}
+.role span{font-size:.9rem;color:rgba(255,255,255,.8)}
+.cvm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.stat{background:#fff;color:var(--ink);border-radius:var(--r-card);padding:18px 20px;border-bottom:4px solid var(--dept)}
+.stat b{display:block;font-size:2rem;font-weight:800;color:var(--dept-dark);line-height:1.2}
+.stat span{font-size:.9rem;color:var(--ink-2)}
+.stat small{display:block;font-size:.75rem;color:var(--ink-3)}
+.network{margin-top:22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:rgba(255,255,255,.08);border:1px dashed rgba(255,255,255,.35);border-radius:var(--r-card);padding:16px 20px}
+.network b{white-space:nowrap}
+.network .slot{flex:1;min-width:120px;height:44px;border-radius:12px;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:.8rem;color:rgba(255,255,255,.7)}
+@media (max-width:900px){.cvm-top{grid-template-columns:1fr}.cvm-stats{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.roles{grid-template-columns:1fr}}
+
+
+/* ============ Facebook embed + live data ============ */
+.fb-wrap{display:grid;grid-template-columns:1fr 500px;gap:24px;align-items:center;margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:var(--r-glass);padding:24px}
+.fb-text h3{font-size:1.3rem;margin:12px 0 6px}.fb-text p{color:var(--ink-2);margin-bottom:16px}
+.fb-frame{display:flex;justify-content:center}
+.feature .ph,.side-list .ph{position:relative;overflow:hidden}
+.feature .ph img,.side-list .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.feature p.ex{color:var(--ink-2);font-size:.95rem;margin-top:4px}
+.data-note{font-size:.8rem;color:var(--ink-3);margin-top:10px;text-align:right}
+.empty{padding:30px;text-align:center;color:var(--ink-3);background:#fff;border-radius:18px;border:1px dashed var(--line)}
+@media (max-width:900px){.fb-wrap{grid-template-columns:1fr}}
+
+
+/* ============ Real-content additions ============ */
+.motto{display:inline-block;margin-top:8px;color:var(--dept-dark);font-weight:700}
+.hero-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:760px;margin:26px 0 0}
+.hero-stats div{background:rgba(255,255,255,.75);border:1px solid rgba(240,116,28,.25);backdrop-filter:blur(8px);border-radius:18px;padding:12px 14px;box-shadow:0 6px 20px rgba(15,23,42,.06)}
+.hero-stats b{display:block;font-size:1.8rem;font-weight:800;color:var(--dept-dark);line-height:1.15}
+.hero-stats span{display:block;font-size:.85rem;color:var(--ink);font-weight:600}
+.hero-stats small{display:block;font-size:.72rem;color:var(--ink-3);margin-top:2px}
+@media (max-width:700px){.hero-stats{grid-template-columns:1fr 1fr}}
+.gallery a.more{display:none}.gallery.all a.more{display:block}
+.more-btn{display:block;margin:18px auto 0}
+.rooms-head{margin-top:44px}
+.rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+.rooms a{position:relative;display:block;border-radius:16px;overflow:hidden;aspect-ratio:4/3}
+.rooms a.big{grid-column:span 2;grid-row:span 2}
+.rooms img{width:100%;height:100%;object-fit:cover;transition:.4s var(--ease)}
+.rooms a:hover img{transform:scale(1.05)}
+.rooms span{position:absolute;left:0;right:0;bottom:0;padding:20px 12px 8px;color:#fff;font-weight:600;font-size:.82rem;background:linear-gradient(0deg,rgba(15,23,42,.75),transparent)}
+@media (max-width:900px){.rooms{grid-template-columns:1fr 1fr}.rooms a.big{grid-column:span 2;grid-row:auto}}
+.hero-logos{display:flex;gap:14px;align-items:center;margin-top:26px;flex-wrap:wrap}
+.hero-logos img{height:58px;width:58px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(15,23,42,.15))}
+.cvm-logos{display:flex;gap:10px;margin-bottom:14px}.cvm-logos img{height:52px;width:52px;object-fit:contain;background:#fff;border-radius:50%;padding:3px}
+.partners{display:flex;flex-wrap:wrap;gap:8px;flex:1}
+.partners span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:var(--r-pill);padding:6px 13px;font-size:.85rem}
+.partners.light span{background:var(--dept-100);border-color:var(--dept-200);color:var(--dept-dark);font-weight:500}
+.network{align-items:flex-start}
+.infos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.info{display:block;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 18px 40px -20px rgba(0,0,0,.6);transition:.3s var(--ease)}
+.info:hover{transform:translateY(-4px)}
+.info img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
+.info:not(.wide) img{aspect-ratio:9/12;object-position:top}
+.src-note{font-size:.78rem;color:rgba(255,255,255,.65);margin-top:16px}
+.hl-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hl-slide .cap{background:linear-gradient(180deg,rgba(15,23,42,.72),rgba(15,23,42,0))}
+.team-photo{width:100%;max-height:340px;object-fit:cover;object-position:center 35%;border-radius:var(--r-glass);margin-bottom:20px;box-shadow:var(--shadow-blue)}
+.quals{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.quals b{color:var(--ink)}
+.lab-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.gallery a{position:relative;display:block;border-radius:18px;overflow:hidden;aspect-ratio:4/3}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:.4s var(--ease)}
+.gallery a:hover img{transform:scale(1.05)}
+.gallery span{position:absolute;left:0;right:0;bottom:0;padding:24px 14px 10px;color:#fff;font-weight:600;font-size:.9rem;background:linear-gradient(0deg,rgba(15,23,42,.75),transparent)}
+.lb{position:fixed;inset:0;z-index:300;background:rgba(10,16,32,.9);display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+.lb.open{display:flex}.lb img{max-width:100%;max-height:100%;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+@media (max-width:900px){.infos,.gallery{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.infos{grid-template-columns:1fr}.hero-logos img{height:46px;width:46px}}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1100px){.nb-t{display:none}.nav-links .top{font-size:.86rem;padding:8px 9px}}
+@media (max-width:760px){
+  .nav{flex-wrap:wrap;height:auto;padding:6px 8px;border-radius:24px;row-gap:4px}
+  .nav-brand{order:0}.nb-t{display:inline;font-size:.95rem}.nav-btns{display:flex!important;margin-left:auto}.nav-btns .btn{padding:8px 14px;font-size:.85rem}
+  .nav-links{order:2;width:100%;margin:0;overflow-x:auto;scrollbar-width:none;padding:2px 0 4px;gap:4px;-webkit-overflow-scrolling:touch}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links>li{display:contents}
+  .dd>.top{display:none}
+  .dd .sub{display:contents;visibility:visible;opacity:1;transform:none}
+  .dd.closing .sub{opacity:1!important;visibility:visible!important}
+  .nav-links a{flex:none;white-space:nowrap}
+  .dd .sub a,.nav-links .top{color:#fff;background:rgba(255,255,255,.14);padding:6px 12px;border-radius:999px;font-size:.82rem;font-weight:600}
+  .dd .sub a i{display:none}
+  .dd .sub a.on,.nav-links .top.on{background:#fff;color:var(--primary);box-shadow:none}
+}
+@media (max-width:900px){
+  .grid3,.steps{grid-template-columns:1fr 1fr}.lab,.news,.contact{grid-template-columns:1fr}
+  .list2{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .grid3,.steps,.seg,.cgrid,.feat{grid-template-columns:1fr}
+  .pills{display:grid;grid-template-columns:1fr 1fr}.pills .pill:last-child{grid-column:1/-1}.pill{justify-content:center;padding:12px}
+  .hl-slide{aspect-ratio:4/5}.cf{height:430px}.cf-card{width:240px;margin-left:-120px}
+  .side-quick{display:none}
+  .dock{left:12px;right:12px;justify-content:space-around}.dock a{flex-direction:column;gap:2px;font-size:.72rem}.dock a.cta{flex-direction:row;padding:12px 18px;font-size:.9rem}
+  .ann-row{flex-wrap:wrap}.ann-row .dl{margin-left:80px}
+}
+:root{color-scheme:light}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav">
+  <a href="#home" class="nav-brand"><span class="nav-logo"><img src="images/logo/dept-civil.png" alt="โลโก้แผนกวิชาโยธา"></span><span class="nb-t">แผนกวิชาโยธา</span></a>
+  <ul class="nav-links">
+    <li><a href="#home" class="top">หน้าแรก</a></li>
+    <li class="dd"><button class="top" type="button">เกี่ยวกับแผนก <i class="fa-solid fa-chevron-down"></i></button>
+      <div class="sub"><a href="#cvm"><i class="fa-solid fa-diagram-project"></i>ศูนย์ CVM สาขาวิชาโยธา</a><a href="#highlights"><i class="fa-solid fa-star"></i>จุดเด่นของแผนก</a><a href="#teachers"><i class="fa-solid fa-user-tie"></i>ครูและบุคลากร</a><a href="#labs"><i class="fa-solid fa-flask"></i>ห้องปฏิบัติการและห้องเรียน</a></div></li>
+    <li class="dd"><button class="top" type="button">หลักสูตร <i class="fa-solid fa-chevron-down"></i></button>
+      <div class="sub"><a href="#courses"><i class="fa-solid fa-graduation-cap"></i>หลักสูตรที่เปิดสอน</a><a href="#admission"><i class="fa-solid fa-file-pen"></i>สมัครเรียน / ดาวน์โหลดเอกสาร</a><a href="#faq"><i class="fa-solid fa-circle-question"></i>คำถามที่พบบ่อย</a></div></li>
+    <li class="dd"><button class="top" type="button">ข่าวสาร <i class="fa-solid fa-chevron-down"></i></button>
+      <div class="sub"><a href="#activities"><i class="fa-solid fa-camera"></i>ข่าวกิจกรรมแผนก</a><a href="#news"><i class="fa-solid fa-bullhorn"></i>ประกาศ</a></div></li>
+    <li><a href="#services" class="top">บริการวิชาการ</a></li>
+    <li><a href="#contact" class="top">ติดต่อเรา</a></li>
+  </ul>
+  <div class="nav-btns">
+    <a href="#admission" class="btn btn-cta">สมัครเรียน</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <span class="hero-ring" style="width:760px;height:760px;left:50%;top:-6%;transform:translateX(-50%)"></span>
+  <span class="hero-ring" style="width:520px;height:520px;left:50%;top:6%;transform:translateX(-50%)"></span>
+  <div class="hero-mark">CIVIL
+    <!-- เส้นโครงข้อหมุน (truss) แทนเส้น ECG ของต้นแบบ -->
+    <svg viewBox="0 0 600 60" preserveAspectRatio="none" fill="none" stroke="#f0741c" stroke-width="2" opacity=".6">
+      <path d="M0 50 H600 M0 10 H600"/>
+      <path d="M0 50 L40 10 L80 50 L120 10 L160 50 L200 10 L240 50 L280 10 L320 50 L360 10 L400 50 L440 10 L480 50 L520 10 L560 50 L600 10"/>
+    </svg>
+  </div>
+  <div class="wrap reveal">
+    <p class="cvm-chip"><i class="fa-solid fa-diagram-project"></i> ศูนย์ CVM สาขาวิชาโยธา</p>
+    <p class="eyebrow">แผนกวิชาโยธา วิทยาลัยเทคนิคสกลนคร</p>
+    <h1>สร้างฝีมือช่าง <em>สร้างคุณภาพ</em> เพื่องานโยธาที่ยั่งยืน</h1>
+    <p class="lead">ก่อตั้ง พ.ศ. 2541 · เปิดสอน ปวช. และ ปวส. สาขาวิชาโยธา และปริญญาตรี ทล.บ. เทคโนโลยีโยธา · ศูนย์บริหารเครือข่ายการผลิตและพัฒนากำลังคนอาชีวศึกษา (CVM) สาขาวิชาโยธา<br><b class="motto">“ตรงเวลา สัมมาคารวะ รับผิดชอบ”</b></p>
+    <div class="pills">
+      <a class="pill" href="#courses"><i class="fa-solid fa-graduation-cap"></i> หลักสูตรที่เปิดสอน</a>
+      <a class="pill" href="#labs"><i class="fa-solid fa-flask"></i> ห้องปฏิบัติการ</a>
+      <a class="pill soft" href="#services"><i class="fa-solid fa-vial-circle-check"></i> บริการทดสอบวัสดุ</a>
+      <a class="pill cta" href="#admission"><i class="fa-solid fa-file-pen"></i> สมัครเรียนออนไลน์</a>
+      <a class="pill" href="#cvm"><i class="fa-solid fa-diagram-project"></i> ศูนย์ CVM สาขาโยธา</a>
+    </div>
+    <div class="hero-stats">
+      <div><b>425</b><span>ผู้เรียน ปวช. + ปวส.</span><small>ปวช. 186 · ปวส. 239 · ต.ค. 2568</small></div>
+      <div><b>13</b><span>ครูและบุคลากร</span><small>แผนกวิชาโยธา</small></div>
+      <div><b>3</b><span>ระดับที่เปิดสอน</span><small>ปวช. · ปวส. · ป.ตรี ทล.บ.</small></div>
+      <div><b>2541</b><span>ปีที่ก่อตั้งแผนก</span><small>ศูนย์ CVM ตั้งแต่ 2566</small></div>
+    </div>
+    <div class="hero-logos"><img src="images/logo/ovec.png" alt="สอศ."><img src="images/logo/snktc.png" alt="วิทยาลัยเทคนิคสกลนคร"><img src="images/logo/dept-civil.png" alt="แผนกวิชาโยธา"><img src="images/logo/cvm.png" alt="CVM"></div>
+  </div>
+</section>
+
+<!-- ================= CVM ================= -->
+<section class="sec cvm" id="cvm">
+  <div class="wrap">
+    <div class="cvm-top reveal">
+      <div>
+        <div class="cvm-logos"><img src="images/logo/cvm.png" alt="CVM"><img src="images/logo/ovec.png" alt="สอศ."></div>
+        <span class="tagline">Center of Vocational Manpower Networking Management</span>
+        <h2 class="h2">ศูนย์ CVM <em>สาขาวิชาโยธา</em></h2>
+        <p class="lead">วิทยาลัยเทคนิคสกลนครได้รับประกาศจากสำนักงานคณะกรรมการการอาชีวศึกษา (สอศ.) ให้อยู่ในโครงการพัฒนาศูนย์ความเป็นเลิศทางการอาชีวศึกษา (Excellent Center) สาขาวิชาโยธา ปีงบประมาณ 2566 (ประกาศ ณ วันที่ 29 กันยายน 2566) และได้รับแต่งตั้งตามคำสั่ง สอศ. ที่ 1743/2567 (17 ก.ย. 2567) ให้เป็นศูนย์ CVM สาขาวิชาโยธา ปีงบประมาณ 2567–2568 ทำหน้าที่ศูนย์บริหารเครือข่ายการผลิตและพัฒนากำลังคนอาชีวศึกษา (CVM) เชื่อมโยงสถานศึกษาที่เปิดสอนสาขาวิชาโยธาทั่วประเทศกับสถานประกอบการ เพื่อผลิตกำลังคนสมรรถนะสูงตามความต้องการของอุตสาหกรรมก่อสร้าง</p>
+        <div class="cvm-btns">
+          <a class="btn btn-cta" href="docs/cvm-announcement-2566.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> ประกาศ สอศ. (PDF)</a>
+          <a class="btn btn-ghost" href="docs/cvm-order-1743-2567.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-signature"></i> คำสั่ง สอศ. 1743/2567</a>
+          <a class="btn btn-ghost" href="#cvm-info"><i class="fa-solid fa-images"></i> อินโฟกราฟิกผลการดำเนินงาน</a>
+        </div>
+      </div>
+      <div class="roles">
+        <div class="role"><span class="n"><i class="fa-solid fa-user-gear"></i></span><b>ผลิตกำลังคนสมรรถนะสูง</b><span>หลักสูตรฐานสมรรถนะยึดโยงกรอบคุณวุฒิวิชาชีพ (NQF) และมาตรฐานอาชีพ</span></div>
+        <div class="role"><span class="n"><i class="fa-solid fa-school"></i></span><b>บริหารเครือข่ายสถานศึกษา</b><span>สถานศึกษาที่เปิดสอนสาขาวิชาโยธา ระดับ ปวช. 40 แห่ง และ ปวส. 68 แห่ง</span></div>
+        <div class="role"><span class="n"><i class="fa-solid fa-handshake"></i></span><b>ร่วมมือสถานประกอบการ</b><span>MOU กับสถานประกอบการและหน่วยงาน 13 แห่ง ทั้งในและนอกพื้นที่</span></div>
+        <div class="role"><span class="n"><i class="fa-solid fa-certificate"></i></span><b>มาตรฐานวิชาชีพ</b><span>ผู้สำเร็จการศึกษาผ่านเกณฑ์มาตรฐานวิชาชีพร้อยละ 100 และมีงานทำหรือศึกษาต่อภายใน 1 ปี ร้อยละ 100 (SAR 2568)</span></div>
+      </div>
+    </div>
+    <div class="cvm-stats reveal">
+      <div class="stat"><b>108</b><span>สถานศึกษาในเครือข่าย</span><small>ปวช. 40 · ปวส. 68 แห่ง</small></div>
+      <div class="stat"><b>13,492</b><span>ผู้เรียนสาขาวิชาโยธาในเครือข่าย</span><small>ข้อมูล ณ 1 ก.ค. 2567</small></div>
+      <div class="stat"><b>13</b><span>สถานประกอบการ / หน่วยงาน MOU</span><small>ในพื้นที่ 9 · นอกพื้นที่ 4</small></div>
+      <div class="stat"><b>100%</b><span>ผ่านเกณฑ์มาตรฐานวิชาชีพ</span><small>SAR ปีการศึกษา 2566 · 2568</small></div>
+    </div>
+    <div class="network reveal"><b><i class="fa-solid fa-network-wired"></i> ภาคีเครือข่าย</b>
+      <div class="partners">
+        <span>บริษัท ทีเอพี (สาขาสกลนคร)</span><span>หจก.อชิรวัตติ์การโยธา</span><span>บริษัท พี.เอ็น.พี คอนสตรัคชั่น 2015 จำกัด</span><span>สำนักงานทางหลวงที่ 3 (สกลนคร)</span><span>แขวงทางหลวงชนบทสกลนคร</span><span>หจก. ชัยมงคลมหานครก่อสร้าง</span><span>หจก. ป.ประเสริฐวัสดุก่อสร้าง</span><span>หจก. ศราวุฒิ การโยธา 1995</span><span>บริษัท ปิ่นไหมคอนสตรัคชั่น จำกัด</span><span>บริษัท ร้อยเอ็ดสร้างบ้าน จำกัด</span><span>บริษัท เฮ็ดเฮือน จำกัด</span><span>บริษัท โพสเท็ค พรีสเตรสซิ่ง จำกัด</span><span>บริษัท ซอยล์เทสติ้งสยาม จำกัด</span>
+      </div>
+    </div>
+    <div class="infos reveal" id="cvm-info">
+      <a href="images/cvm/cvm-info-roadmap.jpg" class="info wide" data-lb><img src="images/cvm/cvm-info-roadmap.jpg" alt="เส้นทางสู่ความเป็นเลิศ CVM สาขาวิชาโยธา" loading="lazy"></a>
+      <a href="images/cvm/cvm-info-success.jpg" class="info wide" data-lb><img src="images/cvm/cvm-info-success.jpg" alt="สรุปความสำเร็จ CVM สาขาโยธา" loading="lazy"></a>
+      <a href="images/cvm/cvm-info-standards.jpg" class="info wide" data-lb><img src="images/cvm/cvm-info-standards.jpg" alt="มาตรฐานความสำเร็จและจุดเด่น" loading="lazy"></a>
+      <a href="images/cvm/cvm-info-excellent.jpg" class="info" data-lb><img src="images/cvm/cvm-info-excellent.jpg" alt="ก้าวสู่ศูนย์ความเป็นเลิศ" loading="lazy"></a>
+      <a href="images/cvm/cvm-info-performance.jpg" class="info" data-lb><img src="images/cvm/cvm-info-performance.jpg" alt="สรุปผลการดำเนินงาน 2568" loading="lazy"></a>
+      <a href="images/cvm/cvm-info-report.jpg" class="info" data-lb><img src="images/cvm/cvm-info-report.jpg" alt="รายงานความสำเร็จ 2568" loading="lazy"></a>
+    </div>
+    <p class="src-note">ที่มา: ประกาศ สอศ. 29 ก.ย. 2566 · คำสั่ง สอศ. ที่ 1743/2567 · รายงานผลการประเมินตนเอง (SAR) ศูนย์ CVM สาขาวิชาโยธา ปีการศึกษา 2566 และ 2568 · แบบรายงานข้อมูลศูนย์ CVM (1 ก.ค. 2567)</p>
+  </div>
+</section>
+
+<!-- ================= HIGHLIGHTS ================= -->
+<section class="sec white" id="highlights">
+  <div class="wrap sec-head reveal"><h2 class="h2">จุดเด่นของแผนก</h2></div>
+  <div class="hl-track" id="hlTrack">
+    <div class="hl-slide"><img class="hl-img" src="images/photos/lab-building.jpg" alt="อาคารทดสอบวัสดุงานโยธา"><div class="cap"><h3>อาคารทดสอบวัสดุงานโยธา — ห้องปฏิบัติการคอนกรีต ปฐพีกลศาสตร์ และวิศวกรรมการทาง</h3></div></div>
+    <div class="hl-slide"><img class="hl-img" src="images/photos/lab-utm.jpg" alt="เครื่องทดสอบวัสดุ"><div class="cap"><h3>เครื่องทดสอบวัสดุและชุดทดสอบคอนกรีต ใช้ทั้งการเรียนการสอนและงานวิจัย</h3></div></div>
+    <div class="hl-slide"><img class="hl-img" src="images/photos/act-survey-field.jpg" alt="ฝึกงานสำรวจ"><div class="cap"><h3>ฝึกงานสำรวจภาคสนามด้วยกล้องระดับอัตโนมัติ กล้องวัดมุม และกล้อง Robotic Total Station</h3></div></div>
+    <div class="hl-slide"><img class="hl-img" src="images/photos/act-site-visit.jpg" alt="ศึกษาดูงานก่อสร้าง"><div class="cap"><h3>เรียนรู้จากหน้างานจริงกับเครือข่ายสถานประกอบการ</h3></div></div>
+    <div class="hl-slide"><img class="hl-img" src="images/photos/act-volunteer-paint.jpg" alt="จิตอาสา"><div class="cap"><h3>อาชีวะบริการวิชาการ วิชาชีพ และจิตอาสา เพื่อชุมชน</h3></div></div>
+    <div class="hl-slide"><img class="hl-img" src="images/photos/dept-sign.jpg" alt="แผนกวิชาโยธา"><div class="cap"><h3>แผนกวิชาโยธา วิทยาลัยเทคนิคสกลนคร ก่อตั้ง พ.ศ. 2541</h3></div></div>
+  </div>
+  <div class="hl-ctrl"><div class="dots" id="hlDots"></div><button class="round" id="hlPlay" aria-label="เล่น/หยุด"><i class="fa-solid fa-pause"></i></button></div>
+</section>
+
+<!-- ================= TEACHERS (coverflow) ================= -->
+<section class="sec light" id="teachers">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><h2 class="h2">ครูและบุคลากร</h2><p class="sub">ทีมครูผู้สอนแผนกวิชาโยธา 13 ท่าน</p></div><a class="more" href="https://snktc.thai.ac/home/group/44/" target="_blank" rel="noopener">ข้อมูลบุคลากรบนเว็บวิทยาลัย →</a></div>
+    <img class="team-photo reveal" src="images/photos/team-staff.jpg" alt="คณะครูแผนกวิชาโยธา" loading="lazy">
+    <div class="filters reveal">
+      <label class="field"><i class="fa-solid fa-magnifying-glass" style="color:var(--ink-3)"></i><input id="tName" placeholder="ค้นหาชื่อ"></label>
+      <label class="field"><select id="tLevel"><option value="">บุคลากรทั้งหมด</option><option>ข้าราชการ</option><option>พนักงานราชการ</option><option>ครูพิเศษ</option></select></label>
+    </div>
+    <div class="cf" id="cfTeachers"></div>
+  </div>
+</section>
+
+<!-- ================= COURSES ================= -->
+<section class="sec white" id="courses">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><h2 class="h2">หลักสูตรที่เปิดสอน</h2><p class="sub">ต่อยอดได้ตั้งแต่ ปวช. ถึงปริญญาตรี</p></div><span class="live">เปิดรับสมัคร ปีการศึกษา 2570</span></div>
+    <div class="grid3 reveal">
+      <div class="card"><div class="card-top"><h3>ปวช. สาขาวิชาโยธา</h3><span class="ico"><i class="fa-solid fa-trowel-bricks"></i></span></div>
+        <ul class="rows"><li>รหัสสาขาวิชา <b>20121</b></li><li>ระยะเวลา <b>3 ปี</b></li><li>รับวุฒิ <b>ม.3</b></li><li>รูปแบบ <b>ระบบปกติ</b></li></ul>
+        <a class="dl" style="margin-top:12px" href="docs/plan-pvc67.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> แผนการเรียน ปวช. (หลักสูตร 2567)</a></div>
+      <div class="card strong"><div class="card-top"><h3>ปวส. สาขาวิชาโยธา</h3><span class="ico"><i class="fa-solid fa-road"></i></span></div>
+        <ul class="rows"><li>รหัสสาขาวิชา <b>30121</b></li><li>ระยะเวลา <b>2 ปี</b></li><li>รับวุฒิ <b>ปวช. / ม.6</b></li><li>รูปแบบ <b>ระบบปกติ</b></li></ul>
+        <a class="dl" style="margin-top:12px" href="docs/plan-pvs68-m6.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> แผนการเรียน ปวส. (ผู้จบ ม.6)</a></div>
+      <div class="card"><div class="card-top"><h3>ป.ตรี ทล.บ. เทคโนโลยีโยธา (ต่อเนื่อง)</h3><span class="ico"><i class="fa-solid fa-user-graduate"></i></span></div>
+        <ul class="rows"><li>ระยะเวลา <b>2 ปี</b></li><li>รับวุฒิ <b>ปวส. โยธา / ก่อสร้าง</b></li><li>รูปแบบ <b>ระบบทวิภาคี</b></li><li>ปี 1 / ปี 2 <b>สถานศึกษา / สถานประกอบการ</b></li></ul>
+        <a class="dl" style="margin-top:12px" href="docs/plan-btech69.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> แผนการศึกษา ทล.บ. 2569</a></div>
+    </div>
+    <div class="quals reveal"><b><i class="fa-solid fa-certificate"></i> หลักสูตรยึดโยงมาตรฐานอาชีพ (สถาบันคุณวุฒิวิชาชีพ)</b>
+      <div class="partners light"><span>ช่างเขียนแบบโครงสร้าง ระดับ 1</span><span>ช่างเขียนแบบสถาปัตยกรรม ระดับ 1, 4</span><span>ช่างแบบหล่อคอนกรีต ระดับ 1</span><span>ช่างเหล็กเสริมคอนกรีต ระดับ 1</span><span>ช่างก่ออิฐ ระดับ 2</span><span>ช่างสำรวจเพื่องานก่อสร้าง ระดับ 2, 3</span><span>ช่างงานทาผิวจราจรแอสฟัลท์คอนกรีต ระดับ 4</span><span>ผู้ควบคุมการก่อสร้าง (อาคารพักอาศัย) ระดับ 5 — ป.ตรี</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LABS ================= -->
+<section class="sec light" id="labs">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><h2 class="h2">ห้องปฏิบัติการและโรงฝึกงาน</h2><p class="sub">ห้องเรียนและพื้นที่ปฏิบัติการ 13 จุด พร้อมครุภัณฑ์สำหรับการเรียนการสอนและงานทดสอบ</p></div></div>
+    <div class="tabs-pill reveal" id="labTabs"></div>
+    <div class="lab reveal">
+      <div class="lab-media"><img id="labImg" src="images/photos/lab-utm.jpg" alt=""><span class="hint" id="labCap"></span></div>
+      <div class="lab-info" id="labInfo"></div>
+    </div>
+    <div class="sec-head rooms-head reveal"><div><h3 class="h2" style="font-size:1.5rem">บรรยากาศห้องเรียนในมุมต่าง ๆ</h3><p class="sub">ห้องเรียน ห้องเขียนแบบ ห้องคอมพิวเตอร์ และห้องปฏิบัติการของแผนกวิชาโยธา</p></div></div>
+    <div class="rooms reveal">
+      <a class="big" href="images/photos/classroom-smart.jpg" data-lb><img src="images/photos/classroom-smart.jpg" alt="ห้องเรียน ป.ตรี พร้อมจอแสดงผล" loading="lazy"><span>ห้องเรียน ป.ตรี พร้อมจอแสดงผล</span></a>
+      <a href="images/photos/room-lecture.jpg" data-lb><img src="images/photos/room-lecture.jpg" alt="ห้องเรียนบรรยาย" loading="lazy"><span>ห้องเรียนบรรยาย</span></a>
+      <a href="images/photos/room-drafting.jpg" data-lb><img src="images/photos/room-drafting.jpg" alt="ห้องเขียนแบบ" loading="lazy"><span>ห้องเขียนแบบ</span></a>
+      <a href="images/photos/room-computer.jpg" data-lb><img src="images/photos/room-computer.jpg" alt="ห้องปฏิบัติการคอมพิวเตอร์" loading="lazy"><span>ห้องปฏิบัติการคอมพิวเตอร์</span></a>
+      <a href="images/photos/room-computer2.jpg" data-lb><img src="images/photos/room-computer2.jpg" alt="ห้องคอมพิวเตอร์ อีกมุมหนึ่ง" loading="lazy"><span>ห้องคอมพิวเตอร์ อีกมุมหนึ่ง</span></a>
+      <a href="images/photos/room-drafting2.jpg" data-lb><img src="images/photos/room-drafting2.jpg" alt="โต๊ะเขียนแบบ มุมกว้าง" loading="lazy"><span>โต๊ะเขียนแบบ มุมกว้าง</span></a>
+      <a href="images/photos/room-class-teaching.jpg" data-lb><img src="images/photos/room-class-teaching.jpg" alt="บรรยากาศการสอนในห้องเรียน" loading="lazy"><span>บรรยากาศการสอนในห้องเรียน</span></a>
+      <a href="images/photos/room-btech-teaching.jpg" data-lb><img src="images/photos/room-btech-teaching.jpg" alt="การเรียนการสอน ป.ตรี วิชาวิศวกรรมการทาง" loading="lazy"><span>การเรียนการสอน ป.ตรี (วิศวกรรมการทาง)</span></a>
+      <a href="images/photos/room-btech.jpg" data-lb><img src="images/photos/room-btech.jpg" alt="ห้องเรียน ป.ตรี มุมกว้าง" loading="lazy"><span>ห้องเรียน ป.ตรี มุมกว้าง</span></a>
+      <a href="images/photos/room-lab-office.jpg" data-lb><img src="images/photos/room-lab-office.jpg" alt="ห้องปฏิบัติการทดสอบวัสดุ" loading="lazy"><span>ห้องปฏิบัติการทดสอบวัสดุ</span></a>
+      <a href="images/photos/room-utm-control.jpg" data-lb><img src="images/photos/room-utm-control.jpg" alt="ชุดควบคุมเครื่องทดสอบแรงอัด/แรงดึง" loading="lazy"><span>ชุดควบคุมเครื่องทดสอบแรงอัด/แรงดึง</span></a>
+      <a href="images/photos/room-tools.jpg" data-lb><img src="images/photos/room-tools.jpg" alt="ห้องเก็บเครื่องมือและวัสดุฝึก" loading="lazy"><span>ห้องเก็บเครื่องมือและวัสดุฝึก</span></a>
+      <a href="images/photos/classroom.jpg" data-lb><img src="images/photos/classroom.jpg" alt="ห้องเรียนรวม" loading="lazy"><span>ห้องเรียนรวม</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACTIVITIES ================= -->
+<section class="sec white" id="activities">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><h2 class="h2">ข่าวกิจกรรมแผนก</h2><p class="sub">ภาพกิจกรรม ข่าวสาร และโครงการของแผนกวิชาโยธา</p></div><a class="btn btn-white" style="border:1px solid var(--primary-200)" href="https://www.facebook.com/100063768835852" target="_blank" rel="noopener"><i class="fa-brands fa-facebook" style="color:#1877f2"></i> ติดตามบน Facebook</a></div>
+    <div class="news reveal" id="actWrap"></div>
+    <div class="gallery reveal" id="actGal">
+      <a href="images/photos/act-waikru.jpg" data-lb><img src="images/photos/act-waikru.jpg" alt="พิธีไหว้ครู แผนกวิชาโยธา" loading="lazy"><span>พิธีไหว้ครู แผนกวิชาโยธา</span></a>
+      <a href="images/photos/act-volunteer-group.jpg" data-lb><img src="images/photos/act-volunteer-group.jpg" alt="อาชีวะบริการวิชาการ วิชาชีพ และจิตอาสา" loading="lazy"><span>อาชีวะบริการวิชาการ วิชาชีพ และจิตอาสา</span></a>
+      <a href="images/photos/act-skill-exhibit.jpg" data-lb><img src="images/photos/act-skill-exhibit.jpg" alt="แข่งขันทักษะวิชาชีพ" loading="lazy"><span>กิจกรรมแข่งขันทักษะวิชาชีพ</span></a>
+      <a href="images/photos/act-survey-field2.jpg" data-lb><img src="images/photos/act-survey-field2.jpg" alt="ฝึกสำรวจ" loading="lazy"><span>ฝึกปฏิบัติงานสำรวจ</span></a>
+      <a href="images/photos/act-drafting.jpg" data-lb><img src="images/photos/act-drafting.jpg" alt="ฝึกเขียนแบบ" loading="lazy"><span>ฝึกปฏิบัติงานเขียนแบบ</span></a>
+      <a href="images/photos/act-graduation.jpg" data-lb><img src="images/photos/act-graduation.jpg" alt="พิธีมอบประกาศนียบัตร" loading="lazy"><span>พิธีมอบประกาศนียบัตร</span></a>
+      <a class="more" href="images/photos/act-assembly.jpg" data-lb><img src="images/photos/act-assembly.jpg" alt="กิจกรรมเข้าแถวหน้าเสาธงของแผนก" loading="lazy"><span>กิจกรรมเข้าแถวหน้าเสาธงของแผนก · ธ.ค. 2564</span></a>
+      <a class="more" href="images/photos/act-survey-practice.jpg" data-lb><img src="images/photos/act-survey-practice.jpg" alt="ฝึกปฏิบัติงานสำรวจด้วยกล้องระดับ" loading="lazy"><span>ฝึกปฏิบัติงานสำรวจด้วยกล้องระดับ · พ.ย. 2564</span></a>
+      <a class="more" href="images/photos/act-scout-camp.jpg" data-lb><img src="images/photos/act-scout-camp.jpg" alt="ค่ายลูกเสือวิสามัญ วิทยาลัยเทคนิคสกลนคร" loading="lazy"><span>ค่ายลูกเสือวิสามัญ วิทยาลัยเทคนิคสกลนคร · ก.พ. 2565</span></a>
+      <a class="more" href="images/photos/act-survey-practice2.jpg" data-lb><img src="images/photos/act-survey-practice2.jpg" alt="ฝึกสำรวจภาคสนามในวิทยาลัย" loading="lazy"><span>ฝึกสำรวจภาคสนามในวิทยาลัย · ก.พ. 2565</span></a>
+      <a class="more" href="images/photos/act-student-meeting.jpg" data-lb><img src="images/photos/act-student-meeting.jpg" alt="กิจกรรมพบนักเรียนนักศึกษาแผนกวิชาโยธา" loading="lazy"><span>กิจกรรมพบนักเรียนนักศึกษาแผนกวิชาโยธา · พ.ค. 2565</span></a>
+      <a class="more" href="images/photos/act-presentation.jpg" data-lb><img src="images/photos/act-presentation.jpg" alt="นำเสนอผลงานในชั้นเรียน" loading="lazy"><span>นำเสนอผลงานในชั้นเรียน · พ.ค. 2565</span></a>
+      <a class="more" href="images/photos/act-skill-team.jpg" data-lb><img src="images/photos/act-skill-team.jpg" alt="ทีมนักเรียนนักศึกษาแข่งขันทักษะวิชาชีพ" loading="lazy"><span>ทีมนักเรียนนักศึกษาแข่งขันทักษะวิชาชีพ</span></a>
+      <a class="more" href="images/photos/act-training.jpg" data-lb><img src="images/photos/act-training.jpg" alt="กิจกรรมอบรมให้ความรู้ในห้องปฏิบัติการ" loading="lazy"><span>กิจกรรมอบรมให้ความรู้ในห้องปฏิบัติการ</span></a>
+      <a class="more" href="images/photos/act-dept-meeting.jpg" data-lb><img src="images/photos/act-dept-meeting.jpg" alt="ประชุมคณะครูแผนกวิชาโยธา" loading="lazy"><span>ประชุมคณะครูแผนกวิชาโยธา · พ.ค. 2568</span></a>
+    </div>
+    <button class="btn btn-ghost more-btn" onclick="const g=document.getElementById('actGal');g.classList.toggle('all');this.textContent=g.classList.contains('all')?'ย่อภาพกิจกรรม':'ดูภาพกิจกรรมเพิ่มเติม (+9)'">ดูภาพกิจกรรมเพิ่มเติม (+9)</button>
+    <div class="fb-wrap reveal">
+      <div class="fb-text"><span class="ico" style="background:#e7f0ff;color:#1877f2"><i class="fa-brands fa-facebook-f"></i></span>
+        <h3>โพสต์ล่าสุดจากเพจแผนก</h3><p>ภาพกิจกรรมและข่าวสารอัปเดตทุกสัปดาห์ ติดตามเพจ "แผนกวิชาโยธา วิทยาลัยเทคนิคสกลนคร"</p>
+        <a class="btn btn-cta" href="https://www.facebook.com/100063768835852" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i> ไปที่เพจ Facebook</a></div>
+      <div class="fb-frame"><iframe title="Facebook แผนกวิชาโยธา" loading="lazy" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2F100063768835852&tabs=timeline&width=500&height=560&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false" width="500" height="560" style="border:none;overflow:hidden;max-width:100%" scrolling="no" frameborder="0" allowfullscreen="true" allow="encrypted-media; picture-in-picture; web-share"></iframe></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ANNOUNCEMENTS ================= -->
+<section class="sec light" id="news">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><h2 class="h2">ประกาศแผนก</h2><p class="sub">ประกาศทั่วไป นักศึกษา ฝึกงาน ทุนการศึกษา</p></div></div>
+    <div class="tabs-pill reveal" id="annTabs"></div>
+    <div class="ann" id="annList"></div>
+    <p class="data-note" id="annNote"></p>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="sec white" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><h2 class="h2">บริการวิชาการ</h2><p class="sub">เลือกกลุ่มผู้รับบริการ</p></div></div>
+    <div class="seg reveal">
+      <button class="on" data-g="std"><span class="si"><i class="fa-solid fa-user-graduate"></i></span><span>สำหรับนักศึกษา<small>ยืมเครื่องมือสำรวจ งานปูน เขียนแบบ ทดสอบคอนกรีต/ปฐพี</small></span></button>
+      <button data-g="pub"><span class="si"><i class="fa-solid fa-people-group"></i></span><span>สำหรับบุคคลภายนอก<small>ทดสอบคอนกรีต เหล็กเส้น ดิน · สำรวจ · ฝึกอบรม</small></span></button>
+    </div>
+    <div class="search reveal"><i class="fa-solid fa-magnifying-glass" style="color:var(--ink-3)"></i><input id="svcQ" placeholder="ค้นหาบริการ เช่น ทดสอบคอนกรีต, เหล็กเส้น, ยืมเครื่องมือ"></div>
+    <div class="chips reveal" id="svcChips"></div>
+    <div class="list2" id="svcList"></div>
+  </div>
+</section>
+
+<!-- ================= ADMISSION (mode tabs) ================= -->
+<section class="sec light" id="admission">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><h2 class="h2">สมัครเรียน / เอกสาร</h2><p class="sub">ดาวน์โหลดใบสมัคร รายละเอียดการรับสมัคร และเอกสารหลักสูตร</p></div></div>
+    <div class="quota reveal" id="quota" data-close="2026-11-20">
+      <div class="q-head">
+        <span class="q-badge" id="qBadge"><i class="fa-solid fa-bullhorn"></i> เปิดรับสมัคร ถึง 20 พ.ย. 2569</span>
+        <h3>ประชาสัมพันธ์การรับสมัครนักเรียน นักศึกษาใหม่ รอบโควตา ประจำปีการศึกษา 2570</h3>
+        <p>ยื่นเอกสารการสมัครได้ที่ ฝ่ายบริหารทรัพยากร / งานทะเบียน วิทยาลัยเทคนิคสกลนคร ภายในวันที่ <b>20 พฤศจิกายน 2569</b> · ประกาศผลภายในวันที่ <b>27 พฤศจิกายน 2569</b> · สอบถาม <a href="tel:042970204">042-970204</a></p>
+      </div>
+      <div class="q-grid">
+        <div class="q-col"><b><i class="fa-solid fa-file-arrow-down"></i> ใบสมัคร</b>
+          <a href="https://drive.google.com/file/d/1qoHJHQXzNT1Rd5bfQ_lXVco9O11vuGY-/view" target="_blank" rel="noopener" class="q-btn main">ใบสมัคร ปวช. <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <a href="https://drive.google.com/file/d/1PG4_W3nJClHWux4AYg7reAUjKi-77CWD/view" target="_blank" rel="noopener" class="q-btn">ใบสมัคร ปวส. สายตรง (จบ ปวช.) <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <a href="https://drive.google.com/file/d/1VnzG42aikfNkpcF_1IEwU7v5kESn6VxV/view" target="_blank" rel="noopener" class="q-btn">ใบสมัคร ปวส. (จบ ม.6) <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <a href="https://drive.google.com/file/d/1-pTm980IwGJWBhpWvmXo2vkr_cJOLOBV/view" target="_blank" rel="noopener" class="q-btn">ใบสมัคร ปวส. เปลี่ยนสาขาเรียน <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+        <div class="q-col"><b><i class="fa-solid fa-circle-info"></i> รายละเอียดประกาศ</b>
+          <a href="https://drive.google.com/file/d/1JdQ9V5oXPhDDvm51_Q8nEOW55WR8AQoa/view" target="_blank" rel="noopener" class="q-btn ghost">ประกาศรับสมัคร ปวช. <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <a href="https://drive.google.com/file/d/1UcNlvFSM5i8e06Nrs6Rx4bUvjVjMhWU9/view" target="_blank" rel="noopener" class="q-btn ghost">ประกาศรับสมัคร ปวส. สายตรง <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <a href="https://drive.google.com/file/d/1mk_CGHo7Nt6KHs3PNoQ7PCm98uqaU0wS/view" target="_blank" rel="noopener" class="q-btn ghost">ประกาศรับสมัคร ปวส. (จบ ม.6) <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <a href="https://snktc.thai.ac/home/" target="_blank" rel="noopener" class="q-btn ghost">ดูประกาศบนเว็บไซต์วิทยาลัย <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="modes reveal">
+      <button class="mode on" data-p="p1"><i class="fa-solid fa-file-pen"></i> สมัครเรียน</button>
+      <button class="mode" data-p="p2"><i class="fa-solid fa-download"></i> ดาวน์โหลดเอกสาร</button>
+      <button class="mode" data-p="p3"><i class="fa-solid fa-list-check"></i> ตรวจสอบผล</button>
+    </div>
+    <div class="panel on" id="p1"><ol class="steps">
+      <li><b>เลือกหลักสูตร</b><span>ปวช. / ปวส. / ป.ตรี</span></li>
+      <li><b>ดาวน์โหลดใบสมัคร</b><span>เลือกใบสมัครตามระดับ (ปุ่มด้านบน) แล้วกรอกให้ครบ</span></li>
+      <li><b>ยื่นเอกสาร</b><span>ที่งานทะเบียน วิทยาลัยเทคนิคสกลนคร (ใบ รบ., สำเนาบัตรประชาชน, รูปถ่าย)</span></li>
+      <li><b>ตรวจสอบรายชื่อ</b><span>ติดตามประกาศผลบนเว็บไซต์</span></li>
+    </ol><p style="margin-top:20px"><a class="btn btn-cta" href="https://snktc.thai.ac/home/" target="_blank" rel="noopener">ติดตามประกาศรับสมัครที่เว็บไซต์วิทยาลัย →</a></p></div>
+    <div class="panel" id="p2"><div class="list2">
+      <a class="item" href="docs/plan-pvc67.pdf" target="_blank" rel="noopener"><span class="ico"><i class="fa-solid fa-file-pdf"></i></span><div>แผนการเรียน ปวช. สาขาวิชาโยธา หลักสูตร พ.ศ. 2567 (3 ปี / 6 ภาคเรียน)<small>PDF · 88 KB</small></div><span class="go">ดาวน์โหลด</span></a>
+      <a class="item" href="docs/plan-pvs68-m6.pdf" target="_blank" rel="noopener"><span class="ico"><i class="fa-solid fa-file-pdf"></i></span><div>แผนการเรียน ปวส. สาขาวิชาโยธา (ผู้จบ ม.6) ปีการศึกษา 2568<small>PDF · 48 KB</small></div><span class="go">ดาวน์โหลด</span></a>
+      <a class="item" href="docs/plan-btech69.pdf" target="_blank" rel="noopener"><span class="ico"><i class="fa-solid fa-file-pdf"></i></span><div>แผนการศึกษา ทล.บ. เทคโนโลยีโยธา (ต่อเนื่อง) 2569<small>PDF · 84 KB</small></div><span class="go">ดาวน์โหลด</span></a>
+      <a class="item" href="docs/cvm-announcement-2566.pdf" target="_blank" rel="noopener"><span class="ico"><i class="fa-solid fa-file-pdf"></i></span><div>ประกาศ สอศ. ศูนย์ความเป็นเลิศ (Excellent Center) ปีงบประมาณ 2566<small>PDF · 1.2 MB</small></div><span class="go">ดาวน์โหลด</span></a>
+      <a class="item" href="docs/cvm-order-1743-2567.pdf" target="_blank" rel="noopener"><span class="ico"><i class="fa-solid fa-file-pdf"></i></span><div>คำสั่ง สอศ. ที่ 1743/2567 แต่งตั้งคณะกรรมการขับเคลื่อนศูนย์ CVM ปีงบประมาณ 2567–2568<small>PDF · 0.6 MB</small></div><span class="go">ดาวน์โหลด</span></a>
+    </div></div>
+    <div class="panel" id="p3"><div class="item"><span class="ico"><i class="fa-solid fa-circle-info"></i></span><div>ผลการคัดเลือกและรายชื่อผู้มีสิทธิ์เข้าศึกษา ประกาศผ่านเว็บไซต์วิทยาลัยเทคนิคสกลนคร และเพจ Facebook แผนกวิชาโยธา<small>ดูหมวด “ประกาศ” ด้านล่างประกอบ</small></div><a class="go" href="https://snktc.thai.ac/home/" target="_blank" rel="noopener">เปิดเว็บวิทยาลัย →</a></div></div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec white" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal" style="justify-content:center"><h2 class="h2">คำถามที่พบบ่อย</h2></div>
+    <div class="faq reveal">
+      <details open><summary>สมัครเรียนแผนกช่างโยธาต้องใช้วุฒิอะไร?</summary><p>ปวช. รับ ม.3 / ปวส. รับ ปวช. หรือ ม.6 / ป.ตรี ทล.บ. รับ ปวส. ในสาขาที่เกี่ยวข้อง</p></details>
+      <details><summary>ระบบทวิภาคีคืออะไร ต่างจากภาคปกติอย่างไร?</summary><p>ระดับ ป.ตรี ทล.บ. เทคโนโลยีโยธา จัดการเรียนแบบทวิภาคี เรียนทฤษฎีที่วิทยาลัยและฝึกอาชีพในสถานประกอบการจริง ได้ประสบการณ์และค่าตอบแทนระหว่างเรียน</p></details>
+      <details><summary>บุคคลภายนอกขอรับบริการทดสอบวัสดุได้อย่างไร?</summary><p>ติดต่อแผนกวิชาโยธา โทร. 089 279 8500 เพื่อสอบถามรายการทดสอบ นัดส่งตัวอย่าง และอัตราค่าบริการ</p></details>
+      <details><summary>จบแล้วทำงานอะไรได้บ้าง?</summary><p>ช่างโยธา ช่างสำรวจ ผู้ควบคุมงานก่อสร้าง ช่างเขียนแบบ ประมาณราคา หรือรับราชการในหน่วยงานท้องถิ่น</p></details>
+      <details><summary>ศูนย์ CVM คืออะไร เกี่ยวข้องกับผู้เรียนอย่างไร?</summary><p>ศูนย์บริหารเครือข่ายการผลิตและพัฒนากำลังคนอาชีวศึกษา (CVM) เป็นศูนย์กลางเครือข่ายของสถานศึกษาและสถานประกอบการในสาขาวิชาโยธา ผู้เรียนจะได้ฝึกกับเครือข่ายสถานประกอบการ ได้รับการพัฒนาทักษะตรงความต้องการของตลาดแรงงาน และมีโอกาสได้รับการรับรองมาตรฐานอาชีพ</p></details>
+      <details><summary>ติดต่อแผนกได้ช่วงเวลาใด?</summary><p>วันจันทร์–ศุกร์ เวลา 08.30–16.30 น. (เว้นวันหยุดราชการ)</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="sec light" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><h2 class="h2">ติดต่อเรา</h2><p class="sub">219 ถนนนิตโย ต.ธาตุเชิงชุม อ.เมืองสกลนคร จ.สกลนคร 47000</p></div></div>
+    <div class="contact reveal">
+      <div class="map"><iframe loading="lazy" src="https://maps.google.com/maps?q=17.193907,104.0867475&z=17&output=embed" title="แผนที่แผนกวิชาโยธา วิทยาลัยเทคนิคสกลนคร"></iframe></div>
+      <div class="cgrid">
+        <div class="ccard"><span class="ico"><i class="fa-solid fa-phone"></i></span><small>โทรศัพท์แผนก</small><b>089 279 8500</b><a href="tel:0892798500">โทรเลย →</a></div>
+        <div class="ccard"><span class="ico"><i class="fa-solid fa-envelope"></i></span><small>อีเมลแผนกวิชาโยธา</small><b>snktcivil@gmail.com</b><a href="mailto:snktcivil@gmail.com">ส่งอีเมล →</a></div>
+        <div class="ccard"><span class="ico"><i class="fa-solid fa-envelope-open-text"></i></span><small>อีเมลวิทยาลัย (งานสารบรรณ)</small><b>saraban@techsakon.ac.th</b><a href="mailto:saraban@techsakon.ac.th">ส่งอีเมล →</a></div>
+        <div class="ccard"><span class="ico"><i class="fa-brands fa-facebook-f"></i></span><small>Facebook</small><b>แผนกวิชาโยธา วิทยาลัยเทคนิคสกลนคร</b><a href="https://www.facebook.com/100063768835852" target="_blank" rel="noopener">ไปที่เพจ →</a></div>
+        <div class="ccard"><span class="ico"><i class="fa-solid fa-globe"></i></span><small>เว็บไซต์วิทยาลัย</small><b>snktc.thai.ac</b><a href="https://snktc.thai.ac/home/" target="_blank" rel="noopener">เปิดเว็บไซต์ →</a></div>
+        <div class="ccard"><span class="ico"><i class="fa-solid fa-location-dot"></i></span><small>ตำแหน่งแผนกวิชาโยธา</small><b>Google Maps · 53VP+HQ3</b><a href="https://maps.app.goo.gl/nzAvkDt9uVjAdSUy7" target="_blank" rel="noopener">นำทาง →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><h4>แผนกวิชาโยธา วิทยาลัยเทคนิคสกลนคร</h4><p>ศูนย์ CVM สาขาวิชาโยธา<br>219 ถนนนิตโย ต.ธาตุเชิงชุม อ.เมืองสกลนคร จ.สกลนคร 47000<br>โทร. 089 279 8500</p></div>
+      <div><h4>เกี่ยวกับแผนก</h4><ul><li><a href="#teachers">บุคลากร</a></li><li><a href="#courses">หลักสูตร</a></li><li><a href="#labs">ห้องปฏิบัติการ</a></li></ul></div>
+      <div><h4>บริการ</h4><ul><li><a href="#admission">สมัครเรียน</a></li><li><a href="#admission">ดาวน์โหลดเอกสาร</a></li><li><a href="#services">ทดสอบวัสดุ</a></li><li><a href="#faq">คำถามที่พบบ่อย</a></li></ul></div>
+      <div><h4>ลิงก์ที่เกี่ยวข้อง</h4><ul><li><a href="https://snktc.thai.ac/home/" target="_blank" rel="noopener">วิทยาลัยเทคนิคสกลนคร</a></li><li><a href="https://www.vec.go.th/" target="_blank" rel="noopener">สำนักงานคณะกรรมการการอาชีวศึกษา</a></li><li><a href="https://cvm.vec.go.th/">ระบบ CVM (สอศ.)</a></li></ul></div>
+    </div>
+    <div class="copy">© 2569 แผนกวิชาโยธา วิทยาลัยเทคนิคสกลนคร</div>
+  </div>
+</footer>
+
+<!-- ================= FLOATING ================= -->
+<div class="side-quick">
+  <a href="#admission" title="สมัครเรียน"><i class="fa-solid fa-file-pen"></i></a>
+  <a href="#cvm" title="ศูนย์ CVM"><i class="fa-solid fa-diagram-project"></i></a>
+  <a href="#labs" title="ห้องปฏิบัติการ"><i class="fa-solid fa-flask"></i></a>
+  <a href="#contact" title="ติดต่อ"><i class="fa-solid fa-phone"></i></a>
+</div>
+<div class="dock">
+  <a class="call" href="#contact"><i class="fa-solid fa-phone"></i> โทรแผนก</a>
+  <a href="https://maps.app.goo.gl/nzAvkDt9uVjAdSUy7" target="_blank" rel="noopener"><i class="fa-solid fa-map-location-dot" style="color:var(--primary)"></i> แผนที่</a>
+  <a href="#teachers"><i class="fa-solid fa-user-tie" style="color:var(--primary)"></i> บุคลากร</a>
+  <a class="cta" href="#admission">สมัครเรียน</a>
+</div>
+
+<script>
+/* ========= แหล่งข้อมูลประกาศ/ข่าว (Google Sheets) =========
+   แก้ข้อมูลที่ชีต: https://docs.google.com/spreadsheets/d/1Ozd94B5fe6Jh0MHCy4JcHJse-FvM7rOwesifOmXISjk/edit
+   ถ้าโหลดชีตไม่ได้ เว็บจะแสดงข้อมูลสำรอง ANN / NEWS ด้านล่างแทน */
+const SHEET_ID='1Ozd94B5fe6Jh0MHCy4JcHJse-FvM7rOwesifOmXISjk';
+const TH_M=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+function parseCSV(t){const rows=[];let r=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];
+  if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}
+  else if(c=='"')q=true;else if(c==','){r.push(f);f=''}else if(c=='\n'){r.push(f);rows.push(r);r=[];f=''}else if(c!='\r')f+=c}
+  if(f||r.length){r.push(f);rows.push(r)}return rows}
+async function loadSheet(name){const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(name)}&_=${Date.now()}`;
+  const res=await fetch(url);if(!res.ok)throw new Error(res.status);const [h,...rows]=parseCSV(await res.text());
+  return rows.filter(r=>r.some(x=>x.trim())).map(r=>Object.fromEntries(h.map((k,i)=>[k.trim(),(r[i]||'').trim()])))}
+function toDate(v){if(!v)return null;let m=v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m){let y=+m[1];if(y>2400)y-=543;return new Date(y,m[2]-1,+m[3])}
+  m=v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(m){let y=+m[3];if(y>2400)y-=543;return new Date(y,m[2]-1,+m[1])}const d=new Date(v);return isNaN(d)?null:d}
+function thDate(d){return d?{d:d.getDate(),m:TH_M[d.getMonth()],y:d.getFullYear()+543}:{d:'-',m:'',y:''}}
+function driveImg(u){if(!u)return'';const m=u.match(/\/d\/([\w-]{20,})/)||u.match(/[?&]id=([\w-]{20,})/);return m?`https://drive.google.com/thumbnail?id=${m[1]}&sz=w1200`:u}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shown=r=>(r['แสดงบนเว็บ']||'ใช่')!=='ไม่';
+
+/* ========= ข้อมูลตัวอย่าง (แก้ไขเป็นข้อมูลจริงได้ที่นี่) ========= */
+const IMG='https://sgp1.digitaloceanspaces.com/thai.ac/client-upload/snktc/personal/';
+const TEACHERS=[
+  {name:'นายนเรศน์ แสนสุริวงค์',role:'หัวหน้าแผนกวิชาโยธา',type:'ข้าราชการ',tag:'ข้าราชการ',img:'images/staff/01.jpg',remote:IMG+'20231106-121535.jpg',ph:1},
+  {name:'นายธนพร เรืองโพน',role:'ครู',type:'ข้าราชการ',tag:'ข้าราชการ',img:'images/staff/02.jpg',remote:IMG+'20231026-114842.jpg',ph:2},
+  {name:'นายธนานันต์ สกุลพันธ์ไชย',role:'ครู',type:'ข้าราชการ',tag:'ข้าราชการ',img:'images/staff/03.jpg',remote:IMG+'20231026-090116.jpg',ph:3},
+  {name:'นายวัฒนา พาระแพง',role:'ครู',type:'ข้าราชการ',tag:'ข้าราชการ',img:'images/staff/04.jpg',remote:IMG+'20231026-083220.jpg',ph:4},
+  {name:'นายจักรพงษ์ ศิริชัยราวรรณ์',role:'ครู',type:'ข้าราชการ',tag:'ข้าราชการ',img:'images/staff/05.jpg',remote:IMG+'20231106-121427.jpg',ph:5},
+  {name:'นายอภิรัตน์ เณรน้อย',role:'ครู',type:'พนักงานราชการ',tag:'พนักงานราชการ',img:'images/staff/06.jpg',remote:IMG+'20231106-121654.jpg',ph:1},
+  {name:'นายณัฐพงษ์ โสภา',role:'ครู',type:'พนักงานราชการ',tag:'พนักงานราชการ',img:'images/staff/07.jpg',remote:IMG+'20231106-122332.jpg',ph:2},
+  {name:'นายถาวร ลมสุขะ',role:'ครู',type:'ครูพิเศษ',tag:'ครูพิเศษ',img:'images/staff/08.jpg',remote:IMG+'20231106-121841.jpg',ph:3},
+  {name:'นายธีรพงศ์ ประกิ่ง',role:'ครู',type:'ครูพิเศษ',tag:'ครูพิเศษ',img:'images/staff/09.jpg',remote:IMG+'20231106-122032.jpg',ph:4},
+  {name:'นายอนิรุทธ์ พลไชย',role:'ครู',type:'ครูพิเศษ',tag:'ครูพิเศษ',img:'images/staff/10.jpg',remote:IMG+'20231106-122221.jpg',ph:5},
+  {name:'นายธนายุทธ ศรีนัครินทร์',role:'ครู',type:'ครูพิเศษ',tag:'ครูพิเศษ',img:'images/staff/11.jpg',remote:IMG+'20260219-105432.jpg',ph:1},
+  {name:'นายพร้อมพงษ์ สันทัน',role:'ครู',type:'ครูพิเศษ',tag:'ครูพิเศษ',img:'images/staff/12.jpg',remote:IMG+'20260219-105217.jpg',ph:2},
+  {name:'นายปฏิพล เอื้อประภาพร',role:'ครู',type:'ครูพิเศษ',tag:'ครูพิเศษ',img:'images/staff/13.jpg',remote:IMG+'20251215-141827.jpg',ph:3},
+];
+const WORKS=[
+  {name:'คอนกรีตผสมทรายจากแม่น้ำสงคราม แม่น้ำก่ำ และแม่น้ำพุง',role:'งานวิจัย · ทดสอบกำลังอัด',tag:'ทรายแม่น้ำพุงให้กำลังอัดสูงสุด 190.78 ksc',ph:1,i:'fa-water'},
+  {name:'คอนกรีตผสมเส้นใยแก้วและไฟเบอร์กลาส',role:'งานวิจัย · คอนกรีตเสริมเส้นใย',tag:'เส้นใยแก้ว 444.26 ksc',ph:2,i:'fa-flask'},
+  {name:'คอนกรีตผสมเศษเหล็กซีลายจากงานก่อสร้าง',role:'งานวิจัย · ใช้ซ้ำวัสดุเหลือใช้',tag:'ศึกษาการนำวัสดุเหลือทิ้งกลับมาใช้',ph:4,i:'fa-recycle'},
+  {name:'อิฐบล็อกผสมฟางข้าวเสริมลำไผ่',role:'โครงการ ป.ตรี · อาสาวิชาการ',tag:'ลดการเผาฟางข้าว',ph:3,i:'fa-seedling'},
+  {name:'อิฐบล็อกช่องลมจากใยแก้วรูปกระต่าย',role:'โครงการ ป.ตรี · อาสาวิชาการ',tag:'น้ำหนักเบา ทนความร้อน',ph:5,i:'fa-cubes'},
+  {name:'ทักษะงานปูน ระดับ ปวช.',role:'แข่งขันทักษะวิชาชีพ ระดับภาค ครั้งที่ 33',tag:'อันดับ 5 เหรียญทอง',ph:3,i:'fa-trophy'},
+  {name:'ทักษะงานคอนกรีต ระดับ ปวส.',role:'แข่งขันทักษะวิชาชีพ ระดับจังหวัด ครั้งที่ 33',tag:'รองชนะเลิศอันดับ 1 เหรียญทอง',ph:1,i:'fa-trophy'},
+  {name:'ทักษะงานไม้ ระดับ ปวช.',role:'แข่งขันทักษะวิชาชีพ ระดับจังหวัด ครั้งที่ 33',tag:'รองชนะเลิศอันดับ 1 เหรียญทอง',ph:2,i:'fa-trophy'},
+];
+const SERVICES=[
+  {g:'pub',cat:'ทดสอบวัสดุ',t:'ทดสอบกำลังอัดคอนกรีต',d:'อาคารทดสอบวัสดุงานโยธา',i:'fa-cube'},
+  {g:'pub',cat:'ทดสอบวัสดุ',t:'ทดสอบแรงดึงเหล็กเส้น (เหล็กเส้นกลม / เหล็กข้ออ้อย)',d:'เครื่องทดสอบอเนกประสงค์ (UTM) · อาคารทดสอบวัสดุงานโยธา',i:'fa-bars-staggered'},
+  {g:'pub',cat:'ทดสอบวัสดุ',t:'ทดสอบแรงดึงและแรงอัดซีเมนต์มอร์ตาร์',d:'ห้องปฏิบัติการคอนกรีต',i:'fa-grip-lines'},
+  {g:'pub',cat:'ทดสอบวัสดุ',t:'ทดสอบการสึกกร่อนของมวลรวม (Los Angeles)',d:'ห้องปฏิบัติการวิศวกรรมการทาง',i:'fa-gear'},
+  {g:'pub',cat:'ทดสอบดิน',t:'ทดสอบ CBR / แรงเฉือนดิน / Unconfined Compression',d:'ห้องปฐพีกลศาสตร์',i:'fa-mound'},
+  {g:'pub',cat:'ทดสอบดิน',t:'เจาะสำรวจดินและหาขนาดเม็ดดิน',d:'ห้องปฐพีกลศาสตร์',i:'fa-layer-group'},
+  {g:'pub',cat:'สำรวจ',t:'งานสำรวจระดับและรังวัดมุม',d:'กล้องระดับอัตโนมัติ / Theodolite / Total Station',i:'fa-compass-drafting'},
+  {g:'pub',cat:'ฝึกอบรม',t:'อบรมเชิงปฏิบัติการ เช่น การเขียนแบบ 3 มิติด้วย SketchUp',d:'ห้องปฏิบัติการคอมพิวเตอร์',i:'fa-chalkboard-user'},
+  {g:'std',cat:'เครื่องมือ',t:'ยืม-คืนเครื่องมือสำรวจ',d:'กล้องระดับ 9 ชุด · กล้องวัดมุม 4 ชุด',i:'fa-toolbox'},
+  {g:'std',cat:'เครื่องมือ',t:'ยืม-คืนเครื่องมืองานปูน',d:'เครื่องมืองานก่อ ฉาบ และงานคอนกรีต สำหรับฝึกปฏิบัติ',i:'fa-trowel'},
+  {g:'std',cat:'เครื่องมือ',t:'ยืม-คืนอุปกรณ์เขียนแบบ',d:'อุปกรณ์เขียนแบบสำหรับงานเขียนแบบโยธาและงานก่อสร้าง',i:'fa-pen-ruler'},
+  {g:'std',cat:'เครื่องมือ',t:'ยืม-คืนอุปกรณ์ทดสอบคอนกรีต',d:'แบบหล่อตัวอย่างคอนกรีต และชุดทดสอบค่ายุบตัว (Slump)',i:'fa-cube'},
+  {g:'std',cat:'เครื่องมือ',t:'ยืม-คืนอุปกรณ์ทดสอบปฐพี',d:'ตะแกรงร่อนมาตรฐาน และชุดทดสอบดินในห้องปฐพีกลศาสตร์',i:'fa-mound'},
+  {g:'std',cat:'ห้องปฏิบัติการ',t:'ใช้ห้องปฏิบัติการคอมพิวเตอร์ / เขียนแบบ',d:'รองรับ 40 คน/ห้อง',i:'fa-computer'},
+  {g:'std',cat:'ปรึกษา',t:'ปรึกษาโครงการ / โครงงานพัฒนาสมรรถนะวิชาชีพ',d:'ครูที่ปรึกษาโครงการ',i:'fa-comments'},
+  {g:'std',cat:'ฝึกงาน',t:'ฝึกประสบการณ์กับสถานประกอบการเครือข่าย',d:'ภาคีเครือข่าย MOU 13 แห่ง',i:'fa-briefcase'},
+];
+const LABS=[
+  {k:'ห้องปฏิบัติการคอนกรีต',i:'fa-cube',img:'images/photos/lab-utm.jpg',cap:'เครื่องทดสอบวัสดุ',cap2:'20 คน/ห้อง',d:'ทดสอบคุณสมบัติซีเมนต์ มวลรวม และกำลังอัดคอนกรีต สำหรับวิชาคอนกรีตเทคโนโลยีและการทดสอบวัสดุงานโยธา',f:['เครื่องทดสอบวัสดุพร้อมอุปกรณ์','เครื่องทดสอบแรงดึงและแรงอัดซีเมนต์มอร์ตาร์','ชุดอุปกรณ์คอนกรีตเทคโนโลยี 4 ชุด','ชุดทดสอบระยะเวลาก่อตัวของซีเมนต์','ตู้อบ MEMMERT / ตู้อบ 200 °C','เครื่องชั่ง Heavy Duty']},
+  {k:'ห้องปฐพีกลศาสตร์',i:'fa-mound',img:'images/photos/lab-oven-sieve.jpg',cap:'ตู้อบและตะแกรงร่อนมาตรฐาน',cap2:'40 คน/ห้อง',d:'ทดสอบคุณสมบัติทางวิศวกรรมของดินสำหรับงานฐานรากและงานทาง',f:['ชุดทดสอบ CBR','เครื่องทดสอบแรงเฉือนของดิน','ชุดทดสอบ Unconfined Compression','ชุดทดสอบแรงต้านทานการรับน้ำหนักของดิน','เครื่องทดสอบหาขนาดเม็ดดิน','เครื่องเจาะสำรวจดิน']},
+  {k:'ห้องวิศวกรรมการทาง',i:'fa-road',img:'images/photos/lab-molds.jpg',cap:'แบบหล่อและอุปกรณ์ทดสอบ',cap2:'40 คน/ห้อง',d:'ทดสอบวัสดุงานทางและมวลรวมสำหรับงานถนน',f:['เครื่องทดสอบการสึกกร่อนแบบ Los Angeles','แบบหล่อตัวอย่างทดสอบ','เครื่องวัดค่าความเป็นกรด-ด่าง','อุปกรณ์ทดสอบมวลรวม']},
+  {k:'งานสำรวจ',i:'fa-compass-drafting',img:'images/photos/act-survey-field.jpg',cap:'ฝึกสำรวจภาคสนาม',cap2:'40 คน/จุด',d:'เครื่องมือสำรวจสำหรับฝึกปฏิบัติภาคสนามและงานบริการวิชาการ',f:['กล้องระดับอัตโนมัติ 9 ชุด','กล้องวัดมุม Theodolite 4 ชุด','กล้องวัดมุมชนิดประมวลผล 1 ชุด','กล้อง Robotic Total Station','ไม้สต๊าฟ / หมุดหลักฐาน','พื้นที่ปฏิบัติการสำรวจ']},
+  {k:'ห้องชลศาสตร์',i:'fa-water',img:'images/photos/lab-building.jpg',cap:'อาคารทดสอบวัสดุงานโยธา',cap2:'40 คน/ห้อง',d:'ศึกษาพฤติกรรมการไหลของน้ำสำหรับงานระบายน้ำและชลประทาน',f:['ชุดทดลองการไหลของน้ำผ่านฝาย','เครื่องทดสอบความสูญเสียพลังงานการไหลผ่านท่อและข้อต่อ']},
+  {k:'คอมพิวเตอร์และเขียนแบบ',i:'fa-computer',img:'images/photos/act-cad-lab.jpg',cap:'ห้องปฏิบัติการคอมพิวเตอร์',cap2:'40 คน/ห้อง',d:'ห้องปฏิบัติการคอมพิวเตอร์และห้องเขียนแบบมือ สำหรับการเขียนแบบโยธาและการประมาณราคา',f:['ห้องปฏิบัติการคอมพิวเตอร์ 1 ห้อง','ห้องปฏิบัติการเขียนแบบมือ 1 ห้อง','การเขียนแบบโยธาด้วยคอมพิวเตอร์','การเขียนแบบ 3 มิติ SketchUp','Google Classroom']},
+  {k:'พื้นที่ปฏิบัติการก่อสร้าง',i:'fa-trowel-bricks',img:'images/photos/act-student-meeting.jpg',cap:'โรงฝึกงานแผนกวิชาโยธา',cap2:'40 คน/จุด',d:'พื้นที่ฝึกปฏิบัติงานก่อสร้างจริง',f:['พื้นที่ปฏิบัติการงานไม้','พื้นที่ปฏิบัติการงานปูน','พื้นที่ปฏิบัติการก่อสร้างอาคารไม้','พื้นที่ปฏิบัติการอาคารคอนกรีตเสริมเหล็ก']},
+];
+const ANN=[
+  {c:'นักศึกษา',d:'20',m:'พ.ย.',y:'2569',t:'ประชาสัมพันธ์การรับสมัครนักเรียน นักศึกษาใหม่ รอบโควตา ประจำปีการศึกษา 2570 — ดาวน์โหลดใบสมัคร ยื่นเอกสารภายใน 20 พ.ย. 2569 ประกาศผลภายใน 27 พ.ย. 2569',url:'https://drive.google.com/file/d/1qoHJHQXzNT1Rd5bfQ_lXVco9O11vuGY-/view'},
+  {c:'CVM',d:'17',m:'ก.ย.',y:'2567',t:'คำสั่ง สอศ. ที่ 1743/2567 แต่งตั้งคณะกรรมการขับเคลื่อนศูนย์บริหารเครือข่ายการผลิตและพัฒนากำลังคนอาชีวศึกษา (CVM) ปีงบประมาณ 2567–2568 — วิทยาลัยเทคนิคสกลนคร สาขาวิชาโยธา',url:'docs/cvm-order-1743-2567.pdf'},
+  {c:'ทุนการศึกษา',d:'30',m:'มิ.ย.',y:'2568',t:'ประกาศรายชื่อผู้ผ่านการคัดเลือกเบื้องต้น โครงการทุนการศึกษาเพื่อขยายโอกาสและพัฒนาประเทศ (ODOS) ประจำปีการศึกษา 2568'},
+  {c:'CVM',d:'29',m:'ก.ย.',y:'2566',t:'ประกาศ สอศ. สถานศึกษาในโครงการพัฒนาศูนย์ความเป็นเลิศทางการอาชีวศึกษา (Excellent Center) ปีงบประมาณ 2566 — วิทยาลัยเทคนิคสกลนคร สาขาวิชาโยธา',url:'docs/cvm-announcement-2566.pdf'},
+];
+const NEWS=[
+  {date:'2026-08-30',t:'บรรยากาศการเรียนการสอน ป.ตรี ทล.บ. เทคโนโลยีโยธา ภาคเรียนที่ 1/2569',ex:'ห้องเรียนปรับปรุงใหม่พร้อมจอแสดงผลสำหรับการเรียนการสอน',img:'images/photos/classroom-smart.jpg',url:'',hot:true},
+  {date:'2026-02-14',t:'โครงการ Up-Skill พัฒนาทักษะงานทาสี ร่วมกับ บริษัท ทีโอเอ เพนท์ (ประเทศไทย)',ex:'',img:'',url:''},
+  {date:'2023-09-29',t:'วิทยาลัยเทคนิคสกลนครได้รับประกาศเป็นศูนย์ CVM สาขาวิชาโยธา',ex:'',img:'images/cvm/cvm-info-roadmap.jpg',url:'docs/cvm-announcement-2566.pdf'},
+  {date:'2022-09-15',t:'ศึกษาดูงานการก่อสร้างจริงในพื้นที่',ex:'',img:'images/photos/act-site-visit.jpg',url:''},
+  {date:'2022-09-06',t:'ฝึกปฏิบัติการเขียนแบบด้วยคอมพิวเตอร์',ex:'',img:'images/photos/act-cad-lab.jpg',url:''},
+];
+
+/* ========= Reveal on scroll ========= */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ========= Active nav on scroll ========= */
+const links=[...document.querySelectorAll('.nav-links a')];
+const secIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id='#'+e.target.id;let hit=null;
+  links.forEach(a=>{const m=a.getAttribute('href')===id;a.classList.toggle('on',m);if(m)hit=a});
+  document.querySelectorAll('.dd>.top').forEach(b=>b.classList.toggle('on',!!hit&&b.parentElement.contains(hit)));
+  if(hit&&window.innerWidth<=760){const ul=hit.closest('.nav-links');ul.scrollTo({left:hit.offsetLeft-ul.clientWidth/2+hit.clientWidth/2,behavior:'smooth'})}}}),{rootMargin:'-45% 0px -50% 0px'});
+/* เมนูย่อย: แตะเพื่อเปิด (จอสัมผัส) / ปิดเมื่อกดเลือกหรือกดที่อื่น */
+document.querySelectorAll('.dd>.top').forEach(b=>b.addEventListener('click',e=>{const d=b.parentElement,o=d.classList.contains('open');
+  document.querySelectorAll('.dd.open').forEach(x=>x.classList.remove('open'));if(!o)d.classList.add('open');e.stopPropagation()}));
+document.querySelectorAll('.dd .sub a').forEach(a=>a.addEventListener('click',()=>{const d=a.closest('.dd');d.classList.add('closing');d.addEventListener('mouseleave',()=>d.classList.remove('closing'),{once:true});setTimeout(()=>d.classList.remove('closing'),1500)}));
+document.addEventListener('click',e=>{if(!e.target.closest('.dd .top'))document.querySelectorAll('.dd.open').forEach(x=>x.classList.remove('open'))});
+document.querySelectorAll('section[id]').forEach(s=>secIO.observe(s));
+
+/* ========= Highlight carousel ========= */
+(()=>{const tr=document.getElementById('hlTrack'),slides=[...tr.children],dots=document.getElementById('hlDots'),play=document.getElementById('hlPlay');
+  let i=0,timer=null;
+  slides.forEach((_,k)=>{const b=document.createElement('button');b.className='dot';b.onclick=()=>go(k);dots.appendChild(b)});
+  function go(k){i=(k+slides.length)%slides.length;const s=slides[i];tr.scrollTo({left:s.offsetLeft-(tr.clientWidth-s.clientWidth)/2,behavior:'smooth'});[...dots.children].forEach((d,j)=>d.classList.toggle('on',j===i))}
+  function start(){timer=setInterval(()=>go(i+1),5000);play.innerHTML='<i class="fa-solid fa-pause"></i>'}
+  function stop(){clearInterval(timer);timer=null;play.innerHTML='<i class="fa-solid fa-play"></i>'}
+  play.onclick=()=>timer?stop():start(); go(0); start();
+})();
+
+/* ========= Coverflow ========= */
+function coverflow(el,data,iconFor){
+  let idx=0,items=data;
+  function render(){
+    el.innerHTML='';
+    if(!items.length){el.innerHTML='<p style="text-align:center;padding:80px;color:var(--ink-3)">ไม่พบข้อมูล</p>';return}
+    idx=Math.min(idx,items.length-1);
+    items.forEach((d,k)=>{const off=k-idx,a=Math.abs(off);
+      const c=document.createElement('div');c.className='cf-card';
+      c.innerHTML=(d.img?`<div class="ph ph-${d.ph} photo"><img src="${d.img}" data-r="${d.remote||''}" alt="${d.name}" loading="lazy" onerror="if(this.dataset.r){this.src=this.dataset.r;this.dataset.r=''}else{this.remove()}"><i class="fa-solid ${iconFor(d)}"></i></div>`:`<div class="ph ph-${d.ph}"><i class="fa-solid ${iconFor(d)}"></i></div>`)+`<div class="meta"><div class="role">${d.role}</div><div class="name">${d.name}</div><span class="tag">${d.tag}</span></div>`;
+      c.style.transform=`translateX(${off*62}%) translateZ(${-a*140}px) rotateY(${off*-12}deg) scale(${1-a*.12})`;
+      c.style.zIndex=10-a;c.style.opacity=a>2?0:1;c.style.filter=a?'saturate(.7)':'none';
+      c.onclick=()=>{idx=k;render()};el.appendChild(c)});
+    ['prev','next'].forEach(p=>{const b=document.createElement('button');b.className='round cf-nav '+p;b.innerHTML=`<i class="fa-solid fa-chevron-${p==='prev'?'left':'right'}"></i>`;
+      b.onclick=()=>{idx=Math.max(0,Math.min(items.length-1,idx+(p==='prev'?-1:1)));render()};el.appendChild(b)});
+  }
+  render();return{set(list){items=list;idx=0;render()}};
+}
+const cfT=coverflow(document.getElementById('cfTeachers'),TEACHERS,()=>'fa-user-tie');
+
+const tf=()=>{const q=document.getElementById('tName').value.trim(),l=document.getElementById('tLevel').value;
+  cfT.set(TEACHERS.filter(t=>(!q||t.name.includes(q))&&(!l||t.type===l)))};
+document.getElementById('tName').oninput=tf;document.getElementById('tLevel').onchange=tf;
+
+/* ========= Mode tabs ========= */
+document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id===b.dataset.p))});
+
+/* ========= Services filter ========= */
+(()=>{let g='std',cat='ทั้งหมด';const chips=document.getElementById('svcChips'),list=document.getElementById('svcList'),q=document.getElementById('svcQ');
+  function draw(){const cats=['ทั้งหมด',...new Set(SERVICES.filter(s=>s.g===g).map(s=>s.cat))];
+    chips.innerHTML=cats.map(c=>`<button class="chip ${c===cat?'on':''}">${c}</button>`).join('');
+    [...chips.children].forEach(b=>b.onclick=()=>{cat=b.textContent;draw()});
+    const v=q.value.trim();
+    const rows=SERVICES.filter(s=>s.g===g&&(cat==='ทั้งหมด'||s.cat===cat)&&(!v||s.t.includes(v)));
+    list.innerHTML=rows.map(s=>`<a class="item" href="#contact"><span class="ico"><i class="fa-solid ${s.i}"></i></span><div>${s.t}<small><i class="fa-solid fa-location-dot"></i> ${s.d}</small></div><span class="go">ติดต่อแผนก →</span></a>`).join('')||'<p style="color:var(--ink-3)">ไม่พบบริการ</p>'}
+  document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{g=b.dataset.g;cat='ทั้งหมด';document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));draw()});
+  q.oninput=draw;draw();
+})();
+
+/* ========= Labs ========= */
+(()=>{const tabs=document.getElementById('labTabs'),info=document.getElementById('labInfo'),img=document.getElementById('labImg'),cap=document.getElementById('labCap');
+  function show(k){const L=LABS[k];[...tabs.children].forEach((b,j)=>b.classList.toggle('on',j===k));
+    img.src=L.img;img.alt=L.k;cap.textContent=L.cap;
+    info.innerHTML=`<h3>${L.k} <span class="tag"><i class="fa-solid fa-users"></i> ${L.cap2}</span></h3><p>${L.d}</p>
+      <div class="feat">${L.f.map(x=>`<div><i class="fa-solid fa-check"></i>${x}</div>`).join('')}</div>`}
+  tabs.innerHTML=LABS.map(L=>`<button><i class="fa-solid ${L.i}"></i>${L.k}</button>`).join('');
+  [...tabs.children].forEach((b,k)=>b.onclick=()=>show(k));show(0);
+})();
+
+/* ========= Announcements + News (live from Google Sheets) ========= */
+(()=>{const cats=['ทั้งหมด','ทั่วไป','นักศึกษา','ฝึกงาน','ทุนการศึกษา','CVM'];let cur='ทั้งหมด';
+  let ann=ANN.map(a=>({c:a.c,d:a.d,m:a.m,y:a.y,t:a.t,url:a.url||'',ts:0}));
+  const tabs=document.getElementById('annTabs'),list=document.getElementById('annList'),note=document.getElementById('annNote');
+  function draw(){tabs.innerHTML=cats.map(c=>`<button class="${c===cur?'on':''}">${c}</button>`).join('');
+    [...tabs.children].forEach(b=>b.onclick=()=>{cur=b.textContent;draw()});
+    const rows=ann.filter(a=>cur==='ทั้งหมด'||a.c===cur).slice(0,8);
+    list.innerHTML=rows.length?rows.map(a=>`<div class="ann-row"><div class="dbadge"><small>${a.m}</small><b>${a.d}</b><small>${a.y}</small></div>
+      <div class="t"><div class="labels"><span class="lbl">${esc(a.c)}</span>${a.url?'<span class="lbl pdf">ไฟล์แนบ</span>':''}</div>${esc(a.t)}</div>
+      ${a.url?`<a class="dl" href="${esc(a.url)}" target="_blank" rel="noopener"><i class="fa-solid fa-file-arrow-down"></i> ดาวน์โหลด</a>`:''}</div>`).join(''):'<div class="empty">ยังไม่มีประกาศในหมวดนี้</div>'}
+  const icons=['fa-person-digging','fa-trophy','fa-handshake','fa-chalkboard-user','fa-hand-holding-heart'];
+  function drawNews(items){const w=document.getElementById('actWrap');if(!items.length){w.innerHTML='<div class="empty">ยังไม่มีข่าวกิจกรรม</div>';return}
+    const f=items.find(n=>n.hot)||items[0],rest=items.filter(n=>n!==f).slice(0,4);
+    const pic=(n,k)=>`<div class="ph ph-${(k%5)+1}"><i class="fa-solid ${icons[k%5]}"></i>${n.img?`<img src="${esc(driveImg(n.img))}" alt="" loading="lazy" onerror="this.remove()">`:''}</div>`;
+    const dt=n=>{const x=thDate(toDate(n.date));return `${x.d} ${x.m} ${x.y}`};
+    w.innerHTML=`<a class="feature" href="${esc(f.url||'#activities')}" ${f.url?'target="_blank" rel="noopener"':''}>${pic(f,0)}
+      <div class="body"><span class="tag">ข่าว</span><div style="flex:1"><h3>${esc(f.t)}</h3>${f.ex?`<p class="ex">${esc(f.ex)}</p>`:''}</div><span class="date">${dt(f)}</span></div></a>
+      <div class="side-list">${rest.map((n,k)=>`<a href="${esc(n.url||'#activities')}" ${n.url?'target="_blank" rel="noopener"':''}>${pic(n,k+1)}<div><span class="date">${dt(n)}</span><b>${esc(n.t)}</b></div></a>`).join('')}</div>`}
+  draw();drawNews(NEWS);
+  Promise.all([loadSheet('ประกาศ'),loadSheet('ข่าวกิจกรรม')]).then(([A,N])=>{
+    ann=A.filter(shown).map(r=>{const d=toDate(r['วันที่']),x=thDate(d);return{c:r['หมวด']||'ทั่วไป',d:x.d,m:x.m,y:x.y,t:r['หัวข้อ'],url:r['ลิงก์ไฟล์'],ts:d?+d:0}}).filter(a=>a.t).sort((a,b)=>b.ts-a.ts);
+    const news=N.filter(shown).map(r=>({date:r['วันที่'],t:r['หัวข้อ'],ex:r['รายละเอียดสั้น'],img:r['ลิงก์รูป'],url:r['ลิงก์ข่าว'],hot:r['ข่าวเด่น']==='ใช่',ts:+(toDate(r['วันที่'])||0)})).filter(n=>n.t).sort((a,b)=>b.ts-a.ts);
+    draw();drawNews(news);note.textContent='ข้อมูลอัปเดตอัตโนมัติจากระบบประกาศของแผนก';
+  }).catch(()=>{note.textContent='แสดงข้อมูลสำรอง (เชื่อมต่อระบบประกาศไม่ได้ชั่วคราว)'});
+})();
+</script>
+<div class="lb" id="lb"><img alt=""></div>
+<script>{const lb=document.getElementById('lb');document.addEventListener('click',e=>{const a=e.target.closest('a[data-lb]');if(a){e.preventDefault();lb.querySelector('img').src=a.href;lb.classList.add('open')}else if(e.target.closest('#lb'))lb.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open')})}</script>
+<script>
+/* เมนู: กดแล้วเลื่อนลงไปยังหัวข้อแบบนุ่มนวล (ไม่เปลี่ยนหน้า) */
+(()=>{const nav=document.querySelector('.nav');
+  function goTo(id,push){const t=id==='home'?document.body:document.getElementById(id);if(!t)return;
+    const off=(nav?nav.getBoundingClientRect().bottom:0)+14;
+    const y=id==='home'?0:t.getBoundingClientRect().top+window.pageYOffset-off;
+    window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+    /* รูปที่โหลดระหว่างเลื่อนอาจดันเนื้อหา — ตรวจซ้ำแล้วจัดตำแหน่งให้ตรงหัวข้อ */
+    clearTimeout(goTo.t);let n=0;const fix=()=>{if(id==='home'||++n>6)return;const d=t.getBoundingClientRect().top-off;
+      if(Math.abs(d)>4)window.scrollTo({top:window.pageYOffset+d,behavior:n<3?'smooth':'auto'});goTo.t=setTimeout(fix,450)};goTo.t=setTimeout(fix,700);
+    try{history[push?'pushState':'replaceState'](null,'','#'+id)}catch(e){}}
+  document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;
+    const id=decodeURIComponent(a.getAttribute('href').slice(1));if(!id||a.hasAttribute('data-lb'))return;
+    if(id!=='home'&&!document.getElementById(id))return;
+    e.preventDefault();document.getElementById('mmenu')?.classList.remove('open');goTo(id,true)});
+  window.addEventListener('load',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h&&document.getElementById(h))setTimeout(()=>goTo(h,false),60)});
+})();
+</script>
+<script>
+(()=>{const q=document.getElementById('quota');if(!q)return;const end=new Date(q.dataset.close+'T23:59:59+07:00');
+  if(Date.now()>end){const b=document.getElementById('qBadge');b.classList.add('closed');b.innerHTML='<i class="fa-solid fa-circle-check"></i> ปิดรับสมัครรอบโควตาแล้ว · ประกาศผลภายใน 27 พ.ย. 2569'}})();
+</script>
+</body>
+</html>
